@@ -19,6 +19,12 @@
             <artifactId>cheetunit-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <!-- TODO just for de/serialization, remove at a later point-->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.11</version>
+        </dependency>
     </dependencies>
 
 </project>

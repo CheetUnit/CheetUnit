@@ -35,20 +35,18 @@ public class CheetUnit {
     factory.setSuperclass(clazz); // TODO Implement if clazz is an interface
 
     try {
-      return (T) factory.create(new Class<?>[0], new Object[0], new CheatUnitMethodHandler<T>(clazz, getConfig(clazz)));
+      return (T) factory.create(new Class<?>[0], new Object[0], new CheetUnitMethodHandler<T>(clazz, getConfig(clazz)));
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 
-
-
-  private static class CheatUnitMethodHandler<T> implements MethodHandler {
+  private static class CheetUnitMethodHandler<T> implements MethodHandler {
 
     private final Class<T>        clazz;
     private final CheetUnitConfig config;
 
-    public CheatUnitMethodHandler(Class<T> clazz, CheetUnitConfig config) {
+    public CheetUnitMethodHandler(Class<T> clazz, CheetUnitConfig config) {
       this.clazz = clazz;
       this.config = config;
     }
@@ -73,7 +71,6 @@ public class CheetUnit {
 
   }
 
-
   private static <T> CheetUnitConfig getConfig(Class<T> clazz) throws IllegalAccessException, InvocationTargetException, InstantiationException {
     if (CheetUnitConfigProvider.class.isAssignableFrom(clazz)) {
       Constructor<?>[] constructors = clazz.getDeclaredConstructors(); // TODO handle multiple constructors
@@ -84,6 +81,4 @@ public class CheetUnit {
     return CheetUnitConfig.DEFAULT_LOCALHOST;
 
   }
-
-
 }

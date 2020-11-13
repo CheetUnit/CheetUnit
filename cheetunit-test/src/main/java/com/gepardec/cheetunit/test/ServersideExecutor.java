@@ -7,6 +7,8 @@ package com.gepardec.cheetunit.test;
 
 import java.util.List;
 
+import com.gepardec.cheetunit.core.RequestDTO;
+
 class ServersideExecutor {
 
   private final String         url;
@@ -22,6 +24,14 @@ class ServersideExecutor {
   }
 
   Object execute(String methodName, Object[] args) {
+    RequestDTO dto = RequestDTOFactory.create(methodName, args, classes);
+
+    // execute rest call
+
+    // unwrap return object
+
+
     throw new RuntimeException("Not implemented yet.");
   }
+
 }
