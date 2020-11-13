@@ -9,7 +9,7 @@ public class HelloWorldServiceInvoker extends BaseServiceInvoker {
   @Inject
   private HelloWorldService service;
 
-  public String printAndGetHelloWorld() {
-    return service.printAndGetHelloWorld();
+  public String getHelloWorld() {
+    return service.getHelloWorld();
   }
 }

@@ -5,8 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class HelloWorldService {
 
-  public String printAndGetHelloWorld() {
-    System.out.println("Hello world");
+  public String getHelloWorld() {
     return "Hello world";
   }
 }
