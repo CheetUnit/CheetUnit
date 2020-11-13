@@ -18,4 +18,9 @@ public class HelloWorldServiceInvoker extends BaseServiceInvoker {
   public String getHelloWorld() {
     return service.getHelloWorld();
   }
+
+  public String getHelloWorldWithoutCDI() {
+    service = new HelloWorldService();
+    return service.getHelloWorld();
+  }
 }
