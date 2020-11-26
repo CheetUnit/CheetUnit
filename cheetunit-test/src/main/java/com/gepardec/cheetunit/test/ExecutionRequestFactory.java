@@ -5,7 +5,7 @@
 
 package com.gepardec.cheetunit.test;
 
-import com.gepardec.cheetunit.core.RequestDTO;
+import com.gepardec.cheetunit.core.ExecutionRequest;
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.util.Base64;
@@ -13,16 +13,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Factory for creating a new object of type {@link RequestDTO}
+ * Factory for creating a new object of type {@link ExecutionRequest}
  */
-class RequestDTOFactory {
+class ExecutionRequestFactory {
 
-    private RequestDTOFactory() {
+    private ExecutionRequestFactory() {
         // no instantiation allowed
     }
 
-    static RequestDTO create(String methodName, Object[] args, List<Class<?>> classes) {
-        RequestDTO dto = new RequestDTO();
+    static ExecutionRequest create(String methodName, Object[] args, List<Class<?>> classes) {
+        ExecutionRequest dto = new ExecutionRequest();
         dto.setPrimaryClassName(classes.get(0).getName());
         dto.setMethodName(methodName);
         dto.setArgs(Base64.getEncoder().encodeToString(SerializationUtils.serialize(args)));

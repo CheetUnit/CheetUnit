@@ -17,5 +17,19 @@
             <artifactId>cheetunit-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javaee.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-core-impl</artifactId>
+            <version>3.0.5.Final</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

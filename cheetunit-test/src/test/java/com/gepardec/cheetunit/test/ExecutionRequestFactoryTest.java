@@ -7,7 +7,7 @@ package com.gepardec.cheetunit.test;
 
 import org.junit.jupiter.api.Test;
 
-class RequestDTOFactoryTest {
+class ExecutionRequestFactoryTest {
 
   @Test
   void create() {

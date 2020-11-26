@@ -5,7 +5,7 @@
 
 package com.gepardec.cheetunit.test;
 
-import com.gepardec.cheetunit.core.RequestDTO;
+import com.gepardec.cheetunit.core.ExecutionRequest;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ class ServersideExecutor {
     }
 
     Object execute(String methodName, Object[] args) {
-        RequestDTO dto = RequestDTOFactory.create(methodName, args, classes);
+        ExecutionRequest dto = ExecutionRequestFactory.create(methodName, args, classes);
 
         // execute rest call
 

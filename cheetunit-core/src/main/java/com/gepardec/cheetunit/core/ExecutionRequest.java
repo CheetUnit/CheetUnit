@@ -10,13 +10,12 @@ import java.util.Map;
 /**
  * DTO which will be sent from the clientside to the serverside.
  */
-public class RequestDTO {
+public class ExecutionRequest {
 
     private String primaryClassName;
     private String methodName;
     private String args;
     private Map<String, String> classMap;
-
 
     public String getPrimaryClassName() {
         return primaryClassName;

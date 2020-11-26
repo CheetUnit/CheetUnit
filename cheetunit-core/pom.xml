@@ -20,6 +20,12 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javaee.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <!-- TODO just for de/serialization, remove at a later point-->
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
