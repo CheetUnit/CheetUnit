@@ -1,53 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2020 Gepardec IT Services GmbH and the CheetUnit contributors
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
+        <artifactId>cheetunit-examples</artifactId>
         <groupId>com.gepardec.cheetunit</groupId>
-        <artifactId>cheetunit-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <!-- this artefact will be released -->
-    <artifactId>cheetunit-core</artifactId>
+    <artifactId>greeter-example</artifactId>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>com.gepardec.cheetunit</groupId>
-            <artifactId>cheetunit-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>${javaee.version}</version>
+            <version>7.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.caucho</groupId>
-            <artifactId>hessian</artifactId>
-            <version>4.0.63</version>
+            <groupId>com.gepardec.cheetunit</groupId>
+            <artifactId>cheetunit-wildfly</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
+        <!-- test dependencies -->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.11</version>
+            <groupId>com.gepardec.cheetunit</groupId>
+            <artifactId>cheetunit-test</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.6</version>
-        </dependency>
     </dependencies>
-
 </project>

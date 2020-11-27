@@ -53,6 +53,7 @@ public class SerializationUtils {
         Hessian2Input in = new Hessian2Input(bin);
         in.getSerializerFactory().setAllowNonSerializable(true);
         in.getSerializerFactory().addFactory(SerializationConfig.getCustomSerializerFactory());
+
         try {
             in.startMessage();
             Object result;

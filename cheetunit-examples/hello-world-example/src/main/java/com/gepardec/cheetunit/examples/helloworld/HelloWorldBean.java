@@ -7,13 +7,12 @@ package com.gepardec.cheetunit.examples.helloworld;
 
 import com.gepardec.cheetunit.examples.helloworld.service.HelloWorldService;
 
-import javax.annotation.ManagedBean;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@ManagedBean
 @RequestScoped
 public class HelloWorldBean {
 

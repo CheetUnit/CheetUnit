@@ -5,12 +5,19 @@
 
 package com.gepardec.cheetunit.examples.helloworld.service;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class HelloWorldService {
 
-  public String getHelloWorld() {
-    return "Hello World!";
-  }
+    private static final Logger LOG = LoggerFactory.getLogger(HelloWorldService.class);
+
+    public String getHelloWorld() {
+        LOG.info("Executing helloWorld service.");
+        return "Hello World!";
+    }
 }

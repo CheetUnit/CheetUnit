@@ -33,13 +33,17 @@ public class CheetUnitExecutor {
      */
     public String execute(ExecutionRequest executionRequest) {
 
-        checkEnabled();
+        try {
+            checkEnabled();
 
-        prepareClassloader(executionRequest);
-        Object primaryObject = instantiatePrimaryObject(executionRequest);
+            prepareClassloader(executionRequest);
+            Object primaryObject = instantiatePrimaryObject(executionRequest);
 
-        Object result = invokeRequestedMethod(primaryObject, executionRequest);
-        return Base64.getEncoder().encodeToString(SerializationUtils.serialize(result));
+            Object result = invokeRequestedMethod(primaryObject, executionRequest);
+            return Base64.getEncoder().encodeToString(SerializationUtils.serialize(result));
+        } catch (Exception e) {
+            return Base64.getEncoder().encodeToString(SerializationUtils.serialize(e));
+        }
     }
 
     private void checkEnabled() {
@@ -88,18 +92,16 @@ public class CheetUnitExecutor {
     }
 
     private Object invokeRequestedMethod(Object primaryObject, ExecutionRequest executionRequest) {
-        Object result = null;
-        boolean methodFound = false;
 
-        List<Method> methods = Arrays.asList(primaryObject.getClass().getMethods());
+        List<Method> methods = new ArrayList<>(Arrays.asList(primaryObject.getClass().getMethods()));
         methods.addAll(Arrays.asList(primaryObject.getClass().getDeclaredMethods()));
 
+        Object[] args = (Object[]) SerializationUtils.deserialize(Base64.getDecoder().decode(executionRequest.getArgs()));
+
         for (Method method : methods) {
-            if (method.getName().equals(executionRequest.getMethodName())) {
-                methodFound = true;
+            if (method.getName().equals(executionRequest.getMethodName()) && methodParametersMatching(method, args)) {
                 try {
-                    Object[] args = (Object[]) SerializationUtils.deserialize(Base64.getDecoder().decode(executionRequest.getArgs()));
-                    result = method.invoke(primaryObject, args);
+                    return method.invoke(primaryObject, args);
                 } catch (Exception e) {
 
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -109,20 +111,28 @@ public class CheetUnitExecutor {
 
                     if (e instanceof InvocationTargetException) {
                         String messageWithStackTrace = e.getCause().getClass().getName() + ": " + e.getCause().getMessage() + System.lineSeparator() + stacktrace;
-                        result = new CheetUnitException(messageWithStackTrace);
+                        throw new CheetUnitException(messageWithStackTrace);
                     } else {
-                        result = new CheetUnitException(stacktrace, e);
+                        throw new CheetUnitException(stacktrace, e);
                     }
                 }
             }
+        }
 
-            if (!methodFound) {
-                result = new CheetUnitException("Method " + executionRequest.getMethodName() + " is not found in " + primaryObject.getClass().getName());
+        throw new CheetUnitException("Method " + executionRequest.getMethodName() + " is not found in " + primaryObject.getClass().getName());
+    }
+
+    private boolean methodParametersMatching(Method method, Object[] args) {
+        if(method.getParameterCount() != args.length) {
+            return false;
+        }
+
+        for (int i = 0; i < method.getParameterTypes().length; i++) {
+            if (!method.getParameterTypes()[i].equals(args[i].getClass())) {
+                return false;
             }
         }
 
-        return result;
+        return true;
     }
-
-
 }
