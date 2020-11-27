@@ -7,19 +7,19 @@ package com.gepardec.cheetunit.test;
 
 public class CheetUnitConfig {
 
-    public static final CheetUnitConfig DEFAULT_LOCALHOST = new CheetUnitConfig("http", "localhost", "8080", "");
+    public static final CheetUnitConfig DEFAULT_LOCALHOST = new CheetUnitConfig("http", "localhost", "8080", "cheetunit-insider");
 
     private final String schema;
     private final String host;
     private final String port;
-    private final String rootPath;
+    private final String path;
     private final Class<?>[] additionalClasses;
 
-    public CheetUnitConfig(String schema, String host, String port, String rootPath, Class<?>... additionalClasses) {
+    public CheetUnitConfig(String schema, String host, String port, String path, Class<?>... additionalClasses) {
         this.schema = schema;
         this.host = host;
         this.port = port;
-        this.rootPath = rootPath;
+        this.path = path;
         this.additionalClasses = additionalClasses;
     }
 
@@ -35,8 +35,8 @@ public class CheetUnitConfig {
         return port;
     }
 
-    public String getRootPath() {
-        return rootPath;
+    public String getPath() {
+        return path;
     }
 
     public Class<?>[] getAdditionalClasses() {

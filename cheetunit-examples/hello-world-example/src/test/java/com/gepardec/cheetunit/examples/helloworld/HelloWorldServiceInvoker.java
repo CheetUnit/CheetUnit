@@ -5,10 +5,11 @@
 
 package com.gepardec.cheetunit.examples.helloworld;
 
-import javax.inject.Inject;
-
 import com.gepardec.cheetunit.examples.helloworld.service.HelloWorldService;
 import com.gepardec.cheetunit.test.BaseServiceInvoker;
+import com.gepardec.cheetunit.test.CheetUnitConfig;
+
+import javax.inject.Inject;
 
 public class HelloWorldServiceInvoker extends BaseServiceInvoker {
 
@@ -19,8 +20,9 @@ public class HelloWorldServiceInvoker extends BaseServiceInvoker {
     return service.getHelloWorld();
   }
 
-  public String getHelloWorldWithoutCDI() {
-    service = new HelloWorldService();
-    return service.getHelloWorld();
+  @Override
+  public CheetUnitConfig getConfig() {
+    // TODO use properties instead of override of getConfig
+    return new CheetUnitConfig("http", "localhost", "8080", "hello/rest/cheetunit-insider", getAdditionalClasses());
   }
 }

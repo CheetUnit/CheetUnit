@@ -92,15 +92,16 @@ public class CheetUnitExecutor {
         Object result = null;
         boolean methodFound = false;
 
-        List<Method> methods = Arrays.asList(primaryObject.getClass().getMethods());
+        List<Method> methods = new ArrayList<>(Arrays.asList(primaryObject.getClass().getMethods()));
         methods.addAll(Arrays.asList(primaryObject.getClass().getDeclaredMethods()));
 
         for (Method method : methods) {
+            // FIXME: handle methods with the same name but another signature (parameters differ)
             if (method.getName().equals(executionRequest.getMethodName())) {
                 methodFound = true;
                 try {
                     Object[] args = SerializationUtils.deserialize(Base64.getDecoder().decode(executionRequest.getArgs()));
-                    result = method.invoke(primaryObject, args);
+                    return method.invoke(primaryObject, args);
                 } catch (Exception e) {
 
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();

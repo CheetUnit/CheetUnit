@@ -17,9 +17,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CheetUnit {
+public abstract class CheetUnit {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheetUnit.class);
+
+    private CheetUnit() {
+        // no instantiation allowed
+    }
 
     /**
      * Creates a proxy instance for the given class. <br />
@@ -34,9 +38,10 @@ public class CheetUnit {
         factory.setSuperclass(clazz); // TODO Implement if clazz is an interface
 
         try {
-            return (T) factory.create(new Class<?>[0], new Object[0], new CheetUnitMethodHandler<T>(clazz, getConfig(clazz)));
+            return (T) factory.create(new Class<?>[0], new Object[0], new CheetUnitMethodHandler<>(clazz, getConfig(clazz)));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            LOG.error("Something unexpected happened while creating the proxy object.", e);
+            throw new CheetUnitClientException("Could not create proxy object", e);
         }
     }
 
@@ -46,7 +51,7 @@ public class CheetUnit {
             CheetUnitConfigProvider configProvider = (CheetUnitConfigProvider) constructors[0].newInstance();
             return configProvider.getConfig();
         }
-        LOG.info(String.format("No CheetUnitConfig provided by class %s. Fallback to default config.", clazz.getSimpleName()));
+        LOG.info("No CheetUnitConfig provided by class {}. Fallback to default config.", clazz.getSimpleName());
         return CheetUnitConfig.DEFAULT_LOCALHOST;
 
     }
@@ -68,15 +73,15 @@ public class CheetUnit {
             classList.add(clazz);
             classList.addAll(Arrays.asList(config.getAdditionalClasses()));
 
-            ServersideExecutor executor = ServersideExecutor.create(
-                    buildURL(config.getSchema(), config.getHost(), config.getPort(), config.getRootPath()),
+            RemoteExecutor executor = RemoteExecutor.of(
+                    buildURL(config.getSchema(), config.getHost(), config.getPort(), config.getPath()),
                     classList);
 
             return executor.execute(thisMethod.getName(), args);
         }
 
-        private String buildURL(String schema, String host, String port, String rootPath) {
-            return schema + "://" + host + ":" + port + "/" + rootPath + "/cheetunit/execute";
+        private String buildURL(String schema, String host, String port, String path) {
+            return schema + "://" + host + ":" + port + "/" + path;
         }
 
     }

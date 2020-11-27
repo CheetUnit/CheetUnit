@@ -21,10 +21,4 @@ class HelloWorldServiceIT {
     String result = service.getHelloWorld();
     Assertions.assertEquals("Hello World!", result);
   }
-
-  @Test
-  void getHelloWorldWithoutCDI() {
-    String result = service.getHelloWorldWithoutCDI();
-    Assertions.assertEquals("Hello World!", result);
-  }
 }

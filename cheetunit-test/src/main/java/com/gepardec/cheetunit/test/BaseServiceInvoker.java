@@ -10,24 +10,32 @@ package com.gepardec.cheetunit.test;
  */
 public abstract class BaseServiceInvoker implements CheetUnitConfigProvider {
 
-    private static final String SERVER_PROTOCOL = System.getProperty("org.cheetunit.protocol", "http");
-    private static final String SERVER_HOST = System.getProperty("org.cheetunit.host", "localhost");
-    private static final String SERVER_PORT = System.getProperty("org.cheetunit.port", "8080");
+    private static final String HOST_PROTOCOL = System.getProperty("cheetunit.host.protocol", "http");
+    private static final String HOST_NAME = System.getProperty("cheetunit.host.name", "localhost");
+    private static final String HOST_PORT = System.getProperty("cheetunit.host.port", "8080");
+    private static final String PATH = System.getProperty("cheetunit.path", "cheetunit-insider");
 
     @Override
     public CheetUnitConfig getConfig() {
-        return new CheetUnitConfig(SERVER_PROTOCOL, SERVER_HOST, SERVER_PORT, "cheetunit-insider", getAdditionalClasses());
+        return new CheetUnitConfig(HOST_PROTOCOL, HOST_NAME, HOST_PORT, PATH, getAdditionalClasses());
     }
 
     /**
      * Override this method to add additional classes which are always required for your application integration tests. <br />
-     * The class {@link BaseServiceInvoker} must be a part of the returned array.
+     * The following classes must be contained in the the returned array:
+     * <ul>
+     *     <li>{@link BaseServiceInvoker}</li>
+     *     <li>{@link CheetUnitConfigProvider}</li>
+     *     <li>{@link CheetUnitConfig}</li>
+     * </ul>
      *
      * @return Array of classes which should be transferred to the server.
      */
     protected Class<?>[] getAdditionalClasses() {
         return new Class[]{
-                BaseServiceInvoker.class
+                BaseServiceInvoker.class,
+                CheetUnitConfigProvider.class,
+                CheetUnitConfig.class
         };
     }
 }
