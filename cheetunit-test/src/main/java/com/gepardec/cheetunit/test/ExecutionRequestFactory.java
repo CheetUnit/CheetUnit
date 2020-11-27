@@ -6,7 +6,7 @@
 package com.gepardec.cheetunit.test;
 
 import com.gepardec.cheetunit.core.ExecutionRequest;
-import org.apache.commons.lang3.SerializationUtils;
+import com.gepardec.cheetunit.core.serialization.SerializationUtils;
 
 import java.util.Base64;
 import java.util.List;

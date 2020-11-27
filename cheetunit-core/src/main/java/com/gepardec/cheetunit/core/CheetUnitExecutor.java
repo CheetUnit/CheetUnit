@@ -5,7 +5,7 @@
 
 package com.gepardec.cheetunit.core;
 
-import org.apache.commons.lang3.SerializationUtils;
+import com.gepardec.cheetunit.core.serialization.SerializationUtils;
 
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.AnnotatedType;
@@ -99,7 +99,7 @@ public class CheetUnitExecutor {
             if (method.getName().equals(executionRequest.getMethodName())) {
                 methodFound = true;
                 try {
-                    Object[] args = SerializationUtils.deserialize(Base64.getDecoder().decode(executionRequest.getArgs()));
+                    Object[] args = (Object[]) SerializationUtils.deserialize(Base64.getDecoder().decode(executionRequest.getArgs()));
                     result = method.invoke(primaryObject, args);
                 } catch (Exception e) {
 
