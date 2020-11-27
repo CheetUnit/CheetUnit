@@ -6,6 +6,8 @@
 package com.gepardec.cheetunit.core;
 
 import com.gepardec.cheetunit.core.serialization.SerializationUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.AnnotatedType;
@@ -31,7 +33,7 @@ public class CheetUnitExecutor {
     /**
      * Invokes requested method and returns serialized result
      */
-    public String execute(ExecutionRequest executionRequest) {
+    public SerializedObject execute(ExecutionRequest executionRequest) {
 
         try {
             checkEnabled();
@@ -39,10 +41,10 @@ public class CheetUnitExecutor {
             prepareClassloader(executionRequest);
             Object primaryObject = instantiatePrimaryObject(executionRequest);
 
-            Object result = invokeRequestedMethod(primaryObject, executionRequest);
-            return Base64.getEncoder().encodeToString(SerializationUtils.serialize(result));
+            Pair<Class<?>, Object> result = invokeRequestedMethod(primaryObject, executionRequest);
+            return SerializedObject.of(result.getRight(), result.getLeft());
         } catch (Exception e) {
-            return Base64.getEncoder().encodeToString(SerializationUtils.serialize(e));
+            return SerializedObject.of(e, e.getClass());
         }
     }
 
@@ -91,17 +93,17 @@ public class CheetUnitExecutor {
         return primaryObject;
     }
 
-    private Object invokeRequestedMethod(Object primaryObject, ExecutionRequest executionRequest) {
+    private Pair<Class<?>, Object> invokeRequestedMethod(Object primaryObject, ExecutionRequest executionRequest) {
 
         List<Method> methods = new ArrayList<>(Arrays.asList(primaryObject.getClass().getMethods()));
         methods.addAll(Arrays.asList(primaryObject.getClass().getDeclaredMethods()));
 
-        Object[] args = (Object[]) SerializationUtils.deserialize(Base64.getDecoder().decode(executionRequest.getArgs()));
+        Object[] args = deserializeArguments(executionRequest);
 
         for (Method method : methods) {
             if (method.getName().equals(executionRequest.getMethodName()) && methodParametersMatching(method, args)) {
                 try {
-                    return method.invoke(primaryObject, args);
+                    return new ImmutablePair<>(method.getReturnType(), method.invoke(primaryObject, args));
                 } catch (Exception e) {
 
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -120,6 +122,16 @@ public class CheetUnitExecutor {
         }
 
         throw new CheetUnitException("Method " + executionRequest.getMethodName() + " is not found in " + primaryObject.getClass().getName());
+    }
+
+    private Object[] deserializeArguments(ExecutionRequest executionRequest) {
+        List<SerializedObject> args = executionRequest.getArgs();
+        List<Object> arguments = new ArrayList<>();
+        for (SerializedObject arg : args) {
+            arguments.add(arg.getObject());
+        }
+
+        return arguments.toArray();
     }
 
     private boolean methodParametersMatching(Method method, Object[] args) {

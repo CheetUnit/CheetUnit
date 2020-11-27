@@ -6,10 +6,11 @@
 package com.gepardec.cheetunit.test;
 
 import com.gepardec.cheetunit.core.ExecutionRequest;
-import com.gepardec.cheetunit.core.serialization.SerializationUtils;
+import com.gepardec.cheetunit.core.SerializedObject;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +25,15 @@ class ExecutionRequestFactory {
         // no instantiation allowed
     }
 
-    static ExecutionRequest create(String methodName, Object[] args, List<Class<?>> classes) {
+    static ExecutionRequest create(String methodName, Class<?>[] argTypes, Object[] args, List<Class<?>> classes) {
         ExecutionRequest dto = new ExecutionRequest();
         dto.setPrimaryClassName(classes.get(0).getName());
         dto.setMethodName(methodName);
-        dto.setArgs(Base64.getEncoder().encodeToString(SerializationUtils.serialize(args)));
+        List<SerializedObject> serializedArguments = new ArrayList<>();
+        for (int i = 0; i < args.length; i++) {
+            serializedArguments.add(SerializedObject.of(args[i], argTypes[i]));
+        }
+        dto.setArgs(serializedArguments);
         dto.setClassMap(createClassMap(classes));
         return dto;
     }

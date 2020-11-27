@@ -7,6 +7,7 @@ package com.gepardec.cheetunit.endpoint;
 
 import com.gepardec.cheetunit.core.CheetUnitExecutor;
 import com.gepardec.cheetunit.core.ExecutionRequest;
+import com.gepardec.cheetunit.core.SerializedObject;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -25,7 +26,7 @@ public class CheetUnitRESTEndpoint implements CheetUnitEndpoint {
 
     @Override
     @POST
-    public String execute(ExecutionRequest executionRequest) {
+    public SerializedObject execute(ExecutionRequest executionRequest) {
         return executer.execute(executionRequest);
     }
 }

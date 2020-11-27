@@ -21,6 +21,10 @@ public class SerializationUtils {
 
     public static byte[] serialize(Object object) {
 
+        if(object == null){
+            return null;
+        }
+
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         Hessian2Output out = new Hessian2Output(bos);
         out.getSerializerFactory().setAllowNonSerializable(true);
@@ -71,5 +75,4 @@ public class SerializationUtils {
             throw new CheetUnitException("Deserialization failed.");
         }
     }
-
 }

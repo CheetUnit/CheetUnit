@@ -8,6 +8,7 @@ package com.gepardec.cheetunit.test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gepardec.cheetunit.core.CheetUnitException;
 import com.gepardec.cheetunit.core.ExecutionRequest;
+import com.gepardec.cheetunit.core.SerializedObject;
 import com.gepardec.cheetunit.core.serialization.SerializationUtils;
 import okhttp3.*;
 import org.slf4j.Logger;
@@ -49,19 +50,20 @@ class RemoteExecutor {
      * Uses Serialization and Base64 decoding/encoding for transferring binary data.
      *
      * @param methodName which should be executed
+     * @param parameterTypes
      * @param args       containing the parameter for the executing method
      * @return result of the method under test, which has been executed on the server side
      */
-    Object execute(String methodName, Object[] args) {
-        ExecutionRequest dto = ExecutionRequestFactory.create(methodName, args, classes);
+    Object execute(String methodName, Class<?>[] argTypes, Object[] args) {
+        ExecutionRequest dto = ExecutionRequestFactory.create(methodName, argTypes, args, classes);
 
-        String response = executeRestCall(dto);
+        SerializedObject response = executeRestCall(dto);
 
         return unwrapResponse(response);
     }
 
-    private Object unwrapResponse(String response) {
-        Object returnObject = SerializationUtils.deserialize(Base64.getDecoder().decode(response));
+    private Object unwrapResponse(SerializedObject response) {
+        Object returnObject = response.getObject();
 
         if (returnObject instanceof CheetUnitException) {
             LOG.error("Something unexpected has happened on the server side.", (Exception) returnObject);
@@ -75,7 +77,7 @@ class RemoteExecutor {
         return returnObject;
     }
 
-    private String executeRestCall(ExecutionRequest dto) {
+    private SerializedObject executeRestCall(ExecutionRequest dto) {
         OkHttpClient httpClient = new OkHttpClient();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -89,7 +91,8 @@ class RemoteExecutor {
                 LOG.error("Response doesn't contain any appropriate payload.\\nResponse: {}", response);
                 throw new CheetUnitClientException("Response doesn't contain any appropriate payload.");
             }
-            return response.body().string();
+
+            return objectMapper.readValue(response.body().string(), SerializedObject.class);
         } catch (Exception e) {
             throw new CheetUnitClientException(e);
         }
