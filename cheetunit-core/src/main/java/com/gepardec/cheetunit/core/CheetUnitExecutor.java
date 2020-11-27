@@ -13,7 +13,6 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -40,7 +39,7 @@ public class CheetUnitExecutor {
         Object primaryObject = instantiatePrimaryObject(executionRequest);
 
         Object result = invokeRequestedMethod(primaryObject, executionRequest);
-        return Base64.getEncoder().encodeToString(SerializationUtils.serialize((Serializable) result));
+        return Base64.getEncoder().encodeToString(SerializationUtils.serialize(result));
     }
 
     private void checkEnabled() {

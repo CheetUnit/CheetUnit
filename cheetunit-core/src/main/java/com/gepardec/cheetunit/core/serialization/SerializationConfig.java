@@ -10,6 +10,10 @@ import com.caucho.hessian.io.ExtSerializerFactory;
 
 public class SerializationConfig {
 
+    private SerializationConfig(){
+        // no instantiation allowed
+    }
+
     public static AbstractSerializerFactory getCustomSerializerFactory() {
         ExtSerializerFactory extSerializerFactory = new ExtSerializerFactory();
 

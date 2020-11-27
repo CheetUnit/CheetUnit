@@ -5,16 +5,21 @@
 
 package com.gepardec.cheetunit.core.serialization;
 
-import com.caucho.hessian.io.ExtSerializerFactory;
 import com.caucho.hessian.io.Hessian2Input;
 import com.caucho.hessian.io.Hessian2Output;
 import com.gepardec.cheetunit.core.CheetUnitException;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class SerializationUtils {
 
-    public static byte[] serialize(Object object){
+    private SerializationUtils(){
+        // no instantiation allowed
+    }
+
+    public static byte[] serialize(Object object) {
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         Hessian2Output out = new Hessian2Output(bos);
@@ -34,26 +39,7 @@ public class SerializationUtils {
     }
 
     public static Object deserialize(byte[] bytes) {
-
-        if (bytes == null) {
-            throw new IllegalArgumentException("The byte[] must not be null");
-        }
-
-        ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        Hessian2Input in = new Hessian2Input(bin);
-        in.getSerializerFactory().setAllowNonSerializable(true);
-        in.getSerializerFactory().addFactory(SerializationConfig.getCustomSerializerFactory());
-        try {
-            in.startMessage();
-            Object result = readObject(in);
-            in.completeMessage();
-            in.close();
-            bin.close();
-
-            return result;
-        } catch (IOException e) {
-            throw new CheetUnitException("Deserialization failed.");
-        }
+        return deserialize(bytes, null);
     }
 
 
@@ -69,7 +55,12 @@ public class SerializationUtils {
         in.getSerializerFactory().addFactory(SerializationConfig.getCustomSerializerFactory());
         try {
             in.startMessage();
-            Object result = readObject(in, aClass);
+            Object result;
+            if (aClass == null) {
+                result = in.readObject();
+            } else {
+                return in.readObject(aClass);
+            }
             in.completeMessage();
             in.close();
             bin.close();
@@ -78,15 +69,6 @@ public class SerializationUtils {
         } catch (IOException e) {
             throw new CheetUnitException("Deserialization failed.");
         }
-    }
-
-    private static Object readObject(Hessian2Input in, Class<?> aClass) throws IOException {
-        Oreturn in.readObject(aClass);
-        return result;
-    }
-
-    private static Object readObject(Hessian2Input in) throws IOException {
-        return in.readObject();
     }
 
 }
