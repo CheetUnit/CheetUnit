@@ -9,12 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gepardec.cheetunit.core.CheetUnitException;
 import com.gepardec.cheetunit.core.ExecutionRequest;
 import com.gepardec.cheetunit.core.SerializedObject;
-import com.gepardec.cheetunit.core.serialization.SerializationUtils;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Base64;
 import java.util.List;
 
 /**
@@ -63,7 +61,7 @@ class RemoteExecutor {
     }
 
     private Object unwrapResponse(SerializedObject response) {
-        Object returnObject = response.getObject();
+        Object returnObject = response.extractObject();
 
         if (returnObject instanceof CheetUnitException) {
             LOG.error("Something unexpected has happened on the server side.", (Exception) returnObject);

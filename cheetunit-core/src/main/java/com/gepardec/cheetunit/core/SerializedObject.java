@@ -36,7 +36,7 @@ public class SerializedObject {
         return serializedObject;
     }
 
-    public Object getObject(){
+    public Object extractObject(){
         if(className == null ){
             throw new IllegalStateException("Classname is not allowed to be null");
         }

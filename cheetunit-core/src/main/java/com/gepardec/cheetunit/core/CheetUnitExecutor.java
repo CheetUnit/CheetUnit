@@ -5,7 +5,6 @@
 
 package com.gepardec.cheetunit.core;
 
-import com.gepardec.cheetunit.core.serialization.SerializationUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -128,7 +127,7 @@ public class CheetUnitExecutor {
         List<SerializedObject> args = executionRequest.getArgs();
         List<Object> arguments = new ArrayList<>();
         for (SerializedObject arg : args) {
-            arguments.add(arg.getObject());
+            arguments.add(arg.extractObject());
         }
 
         return arguments.toArray();

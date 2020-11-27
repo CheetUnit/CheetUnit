@@ -14,7 +14,7 @@ class SerializedObjectTest {
     @Test
     public void test(){
         SerializedObject serializedObject = SerializedObject.of("abc", String.class);
-        assertEquals("abc", serializedObject.getObject());
+        assertEquals("abc", serializedObject.extractObject());
     }
 
 }
