@@ -1,5 +1,8 @@
+/*
+ * Copyright 2020 Gepardec IT Services GmbH and the CheetUnit contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
 package com.gepardec.cheetunit.examples.helloworld;
-
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

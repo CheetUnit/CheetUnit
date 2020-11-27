@@ -14,7 +14,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hello-world-example</artifactId>
+    <artifactId>greeter-example</artifactId>
     <packaging>war</packaging>
 
     <dependencies>
@@ -28,10 +28,6 @@
             <groupId>com.gepardec.cheetunit</groupId>
             <artifactId>cheetunit-wildfly</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
         </dependency>
 
         <!-- test dependencies -->
