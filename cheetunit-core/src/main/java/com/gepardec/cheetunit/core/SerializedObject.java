@@ -6,6 +6,7 @@
 package com.gepardec.cheetunit.core;
 
 import com.gepardec.cheetunit.core.serialization.SerializationUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Base64;
 
@@ -42,7 +43,9 @@ public class SerializedObject {
     public static SerializedObject of(Object object, Class<?> objectClass){
         SerializedObject serializedObject = new SerializedObject();
         serializedObject.setClassName(objectClass.getName());
-        serializedObject.setSerializedInstance(Base64.getEncoder().encodeToString(SerializationUtils.serialize(object)));
+        if(object != null){
+            serializedObject.setSerializedInstance(Base64.getEncoder().encodeToString(SerializationUtils.serialize(object)));
+        }
         return serializedObject;
     }
 
@@ -62,6 +65,10 @@ public class SerializedObject {
             aClass = Class.forName(className);
         } catch (ClassNotFoundException e) {
             throw new CheetUnitException("Class " + className + " not found", e);
+        }
+
+        if(StringUtils.isEmpty(serializedInstance) || StringUtils.equalsIgnoreCase(serializedInstance, "null")){
+            return null;
         }
 
         return SerializationUtils.deserialize(Base64.getDecoder().decode(serializedInstance), aClass);

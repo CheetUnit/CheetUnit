@@ -20,7 +20,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 class RemoteExecutorTest {
 
     private static final String PATH = "/cheetunit-insider";
@@ -148,10 +147,10 @@ class RemoteExecutorTest {
                 .withHeader("Content-Type", equalTo("application/json; charset=UTF-8"))
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withBody("{\"className\" : \"" + body.getClassName() + "\", \"serializedInstance\" : \" " + body.getSerializedInstance() + "\"}")));
+                        .withBody("{\"className\" : \"" + body.getClassName() + "\", \"serializedInstance\" : " + (body.getSerializedInstance() == null ? "null" : ("\"" + body.getSerializedInstance() +  "\"")) + "}")));
     }
 
     private SerializedObject serializeAndEncodeResponse(java.io.Serializable response) {
-        return SerializedObject.of(response, response.getClass());
+        return SerializedObject.of(response, response == null ? String.class : response.getClass());
     }
 }
