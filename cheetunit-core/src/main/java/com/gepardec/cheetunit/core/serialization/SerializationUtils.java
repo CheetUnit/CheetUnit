@@ -19,6 +19,11 @@ public class SerializationUtils {
         // no instantiation allowed
     }
 
+    /**
+     * Serializes object into a byte array using hessian serialization. Allows to serialize instances of classes not implementing {@link java.io.Serializable}
+     * @param object object to be serialized
+     * @return null, of source object is null. Otherwise serialized object as byte array
+     */
     public static byte[] serialize(Object object) {
 
         if(object == null){
@@ -42,11 +47,23 @@ public class SerializationUtils {
         return bos.toByteArray();
     }
 
+    /**
+     * Deserializes byte array into the object using hessian serialization.
+     * @param bytes Serialized object as byte array
+     * @return a deserialized instance of the object
+     * @throws CheetUnitException if some exception occurs.
+     */
     public static Object deserialize(byte[] bytes) {
         return deserialize(bytes, null);
     }
 
-
+    /**
+     * Deserializes byte array into the object using hessian serialization.
+     * @param bytes Serialized object as byte array
+     * @param aClass result class
+     * @return a deserialized instance of the object
+     * @throws CheetUnitException if some exception occurs.
+     */
     public static Object deserialize(byte[] bytes, Class<?> aClass) {
 
         if (bytes == null) {

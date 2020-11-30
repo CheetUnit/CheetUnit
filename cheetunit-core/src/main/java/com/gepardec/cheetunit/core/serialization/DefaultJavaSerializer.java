@@ -12,7 +12,10 @@ import org.apache.commons.lang3.SerializationUtils;
 import java.io.IOException;
 import java.io.Serializable;
 
-public class LocalDateSerializer extends AbstractSerializer {
+/**
+ * Default serializer that uses Java-Serialization for the classes, that can't be serialized by hessian, like {@link java.time.LocalDate}
+ */
+public class DefaultJavaSerializer extends AbstractSerializer {
     @Override
     public void writeObject(Object obj, AbstractHessianOutput out) throws IOException {
         if (obj == null) {

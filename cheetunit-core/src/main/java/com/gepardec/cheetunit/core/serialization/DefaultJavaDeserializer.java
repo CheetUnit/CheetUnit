@@ -10,14 +10,11 @@ import com.caucho.hessian.io.AbstractHessianInput;
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
-public class LocalDateDeserializer extends AbstractDeserializer {
-    @Override
-    public Class<?> getType() {
-        return LocalDate.class;
-    }
-
+/**
+ * Default deserializer that uses Java-Serialization for the classes, that can't be deserialized by hessian, like {@link java.time.LocalDate}
+ */
+public class DefaultJavaDeserializer extends AbstractDeserializer {
     @Override
     public Object readObject(AbstractHessianInput in) throws IOException {
         return SerializationUtils.deserialize(in.readBytes());

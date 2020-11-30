@@ -9,6 +9,8 @@ import com.gepardec.cheetunit.core.serialization.SerializationUtils;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -133,6 +135,22 @@ class SerializationUtilsTest {
         byte[] serialized = SerializationUtils.serialize(localDate);
         LocalDate deserialized = (LocalDate) SerializationUtils.deserialize(serialized, LocalDate.class);
         assertTrue(deserialized.compareTo(localDate) == 0);
+    }
+
+    @Test
+    public void serializationOfLocalTime(){
+        LocalTime localTime = LocalTime.now();
+        byte[] serialized = SerializationUtils.serialize(localTime);
+        LocalTime deserialized = (LocalTime) SerializationUtils.deserialize(serialized, LocalTime.class);
+        assertTrue(deserialized.compareTo(localTime) == 0);
+    }
+
+    @Test
+    public void serializationOfLocalDateTime(){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        byte[] serialized = SerializationUtils.serialize(localDateTime);
+        LocalDateTime deserialized = (LocalDateTime) SerializationUtils.deserialize(serialized, LocalDateTime.class);
+        assertTrue(deserialized.compareTo(localDateTime) == 0);
     }
 
     @Test

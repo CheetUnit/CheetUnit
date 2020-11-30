@@ -17,8 +17,14 @@ public class SerializationConfig {
     public static AbstractSerializerFactory getCustomSerializerFactory() {
         ExtSerializerFactory extSerializerFactory = new ExtSerializerFactory();
 
-        extSerializerFactory.addSerializer(java.time.LocalDate.class, new LocalDateSerializer());
-        extSerializerFactory.addDeserializer(java.time.LocalDate.class, new LocalDateDeserializer());
+        extSerializerFactory.addSerializer(java.time.LocalDate.class, new DefaultJavaSerializer());
+        extSerializerFactory.addDeserializer(java.time.LocalDate.class, new DefaultJavaDeserializer());
+
+        extSerializerFactory.addSerializer(java.time.LocalDateTime.class, new DefaultJavaSerializer());
+        extSerializerFactory.addDeserializer(java.time.LocalDateTime.class, new DefaultJavaDeserializer());
+
+        extSerializerFactory.addSerializer(java.time.LocalTime.class, new DefaultJavaSerializer());
+        extSerializerFactory.addDeserializer(java.time.LocalTime.class, new DefaultJavaDeserializer());
 
         return extSerializerFactory;
     }
