@@ -51,7 +51,6 @@
                 <artifactId>cheetunit-invoker-generator-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <configuration>
-                    <destinationFolder>${project.basedir}/src-gen/cheetunitinvokers</destinationFolder>
                     <packagesToScan>
                         <packageToScan>com.gepardec.cheetunit</packageToScan>
                     </packagesToScan>
@@ -75,7 +74,7 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${project.basedir}/src-gen/cheetunitinvokers</source>
+                                <source>${project.build.directory}/generated-test-sources</source>
                             </sources>
                         </configuration>
                     </execution>
