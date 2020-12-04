@@ -48,8 +48,8 @@ class RemoteExecutor {
      * Uses Serialization and Base64 decoding/encoding for transferring binary data.
      *
      * @param methodName which should be executed
-     * @param parameterTypes
-     * @param args       containing the parameter for the executing method
+     * @param argTypes   class array containing the types of the arguments for the executing method
+     * @param args       object array containing the arguments for the executing method
      * @return result of the method under test, which has been executed on the server side
      */
     Object execute(String methodName, Class<?>[] argTypes, Object[] args) {
