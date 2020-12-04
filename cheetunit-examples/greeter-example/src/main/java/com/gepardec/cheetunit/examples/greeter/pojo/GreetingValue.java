@@ -5,8 +5,6 @@
 
 package com.gepardec.cheetunit.examples.greeter.pojo;
 
-import java.time.LocalDate;
-
 public class GreetingValue {
     Salutation salutation;
     String name;
