@@ -6,17 +6,13 @@
 package com.gepardec.cheetunit.test;
 
 import com.gepardec.cheetunit.core.CheetUnitException;
+import com.gepardec.cheetunit.core.SerializedObject;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
-import org.apache.commons.lang3.SerializationUtils;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -144,17 +140,17 @@ class RemoteExecutorTest {
         }
     }
 
-    private void setupStubWithResponse(java.io.Serializable response) {
+    private void setupStubWithResponse(Object response) {
         // as we get a serialized and base64 encoded response from the server, we need to serialize and base64 on our own for tests
-        String body = serializeAndEncodeResponse(response);
+        SerializedObject body = serializeAndEncodeResponse(response);
         stubFor(post(urlEqualTo(PATH))
                 .withHeader("Content-Type", equalTo("application/json; charset=UTF-8"))
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withBody(body)));
+                        .withBody("{\"serializedInstance\" : \"" + body.getSerializedInstance() +  "\"" + "}")));
     }
 
-    private String serializeAndEncodeResponse(java.io.Serializable response) {
-        return Base64.getEncoder().encodeToString(SerializationUtils.serialize((response)));
+    private SerializedObject serializeAndEncodeResponse(Object response) {
+        return SerializedObject.of(response);
     }
 }

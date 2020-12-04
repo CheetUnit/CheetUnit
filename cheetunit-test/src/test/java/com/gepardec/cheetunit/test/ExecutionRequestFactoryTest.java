@@ -6,51 +6,55 @@
 package com.gepardec.cheetunit.test;
 
 import com.gepardec.cheetunit.core.ExecutionRequest;
-import org.apache.commons.lang3.SerializationUtils;
+import com.gepardec.cheetunit.core.SerializedObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 class ExecutionRequestFactoryTest {
 
-  @Test
-  void create_assertProperties() {
-    ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", new Object[]{"param1", 2L, 3D}, Collections.singletonList(ExecutionRequestFactory.class));
+    private static final Class<?>[] ARG_TYPES = {String.class, Long.class, Double.class};
+    private static final Object[] ARGS = {"param1", 2L, 3D};
 
-    Assertions.assertEquals("myMethodName", dto.getMethodName());
+    @Test
+    void create_assertProperties() {
+        ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", ARGS, Collections.singletonList(ExecutionRequestFactory.class));
 
-    Assertions.assertNotNull(dto.getArgs());
-    Assertions.assertFalse(dto.getArgs().isEmpty());
+        Assertions.assertEquals("myMethodName", dto.getMethodName());
 
-    Assertions.assertNotNull(dto.getClassMap());
-    Assertions.assertEquals(1, dto.getClassMap().size());
-  }
+        Assertions.assertNotNull(dto.getArgs());
+        Assertions.assertFalse(dto.getArgs().isEmpty());
 
-  @Test
-  void create_assertArgs() {
-    ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", new Object[]{"param1", 2L, 3D}, Collections.singletonList(ExecutionRequestFactory.class));
+        Assertions.assertNotNull(dto.getClassMap());
+        Assertions.assertEquals(1, dto.getClassMap().size());
+    }
 
-    Assertions.assertNotNull(dto.getArgs());
-    Object[] result = SerializationUtils.deserialize(Base64.getDecoder().decode(dto.getArgs()));
-    Assertions.assertEquals(3, result.length);
-    Assertions.assertEquals("param1", result[0]);
-    Assertions.assertEquals(2L, result[1]);
-    Assertions.assertEquals(3D, result[2]);
-  }
+    @Test
+    void create_assertArgs() {
+        ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", ARGS, Collections.singletonList(ExecutionRequestFactory.class));
 
-  @Test
-  void create_assertClassMap() {
-    ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", new Object[]{"param1", 2L, 3D}, Collections.singletonList(ExecutionRequestFactory.class));
+        Assertions.assertNotNull(dto.getArgs());
+        List<Object> result = dto.getArgs().stream().map(SerializedObject::toObject).collect(Collectors.toList());
+        Assertions.assertEquals(3, result.size());
+        Assertions.assertEquals("param1", result.get(0));
+        Assertions.assertEquals(2L, result.get(1));
+        Assertions.assertEquals(3D, result.get(2));
+    }
 
-    Assertions.assertNotNull(dto.getClassMap());
-    Assertions.assertEquals(1, dto.getClassMap().size());
+    @Test
+    void create_assertClassMap() {
+        ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", ARGS, Collections.singletonList(ExecutionRequestFactory.class));
 
-    Map.Entry<String, String> entry = new ArrayList<>(dto.getClassMap().entrySet()).get(0);
+        Assertions.assertNotNull(dto.getClassMap());
+        Assertions.assertEquals(1, dto.getClassMap().size());
 
-    Assertions.assertEquals(ExecutionRequestFactory.class.getName(), entry.getKey());
-  }
+        Map.Entry<String, String> entry = new ArrayList<>(dto.getClassMap().entrySet()).get(0);
+
+        Assertions.assertEquals(ExecutionRequestFactory.class.getName(), entry.getKey());
+    }
 }

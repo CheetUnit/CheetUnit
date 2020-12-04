@@ -5,15 +5,12 @@
 
 package com.gepardec.cheetunit.core;
 
-import org.apache.commons.lang3.SerializationUtils;
-
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -32,15 +29,19 @@ public class CheetUnitExecutor {
     /**
      * Invokes requested method and returns serialized result
      */
-    public String execute(ExecutionRequest executionRequest) {
+    public SerializedObject execute(ExecutionRequest executionRequest) {
 
-        checkEnabled();
+        try {
+            checkEnabled();
 
-        prepareClassloader(executionRequest);
-        Object primaryObject = instantiatePrimaryObject(executionRequest);
+            prepareClassloader(executionRequest);
+            Object primaryObject = instantiatePrimaryObject(executionRequest);
 
-        Object result = invokeRequestedMethod(primaryObject, executionRequest);
-        return Base64.getEncoder().encodeToString(SerializationUtils.serialize((Serializable) result));
+            Object result = invokeRequestedMethod(primaryObject, executionRequest);
+            return SerializedObject.of(result);
+        } catch (Exception e) {
+            return SerializedObject.of(e);
+        }
     }
 
     private void checkEnabled() {
@@ -93,7 +94,7 @@ public class CheetUnitExecutor {
         List<Method> methods = new ArrayList<>(Arrays.asList(primaryObject.getClass().getMethods()));
         methods.addAll(Arrays.asList(primaryObject.getClass().getDeclaredMethods()));
 
-        Object[] args = SerializationUtils.deserialize(Base64.getDecoder().decode(executionRequest.getArgs()));
+        Object[] args = deserializeArguments(executionRequest);
 
         for (Method method : methods) {
             if (method.getName().equals(executionRequest.getMethodName()) && methodParametersMatching(method, args)) {
@@ -108,15 +109,25 @@ public class CheetUnitExecutor {
 
                     if (e instanceof InvocationTargetException) {
                         String messageWithStackTrace = e.getCause().getClass().getName() + ": " + e.getCause().getMessage() + System.lineSeparator() + stacktrace;
-                        return new CheetUnitException(messageWithStackTrace);
+                        throw new CheetUnitException(messageWithStackTrace);
                     } else {
-                        return new CheetUnitException(stacktrace, e);
+                        throw new CheetUnitException(stacktrace, e);
                     }
                 }
             }
         }
 
-        return new CheetUnitException("Method " + executionRequest.getMethodName() + " is not found in " + primaryObject.getClass().getName());
+        throw new CheetUnitException("Method " + executionRequest.getMethodName() + " is not found in " + primaryObject.getClass().getName());
+    }
+
+    private Object[] deserializeArguments(ExecutionRequest executionRequest) {
+        List<SerializedObject> args = executionRequest.getArgs();
+        List<Object> arguments = new ArrayList<>();
+        for (SerializedObject arg : args) {
+            arguments.add(arg.toObject());
+        }
+
+        return arguments.toArray();
     }
 
     private boolean methodParametersMatching(Method method, Object[] args) {

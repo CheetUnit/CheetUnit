@@ -9,10 +9,7 @@ import com.gepardec.cheetunit.examples.greeter.pojo.GreetingValue;
 import com.gepardec.cheetunit.examples.greeter.pojo.Salutation;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Function;
+import java.time.LocalDate;
 
 @ApplicationScoped
 public class GreeterService {
@@ -35,5 +32,9 @@ public class GreeterService {
 
   public String greet(Salutation salutation, String name, String... otherNames) {
     return "Hello " + salutation.getValue() + " " + name + (otherNames.length == 0 ? "" : ", ") + String.join(", ", otherNames) + "!";
+  }
+
+  public LocalDate getNextDay(LocalDate aDay){
+    return aDay.plusDays(1);
   }
 }

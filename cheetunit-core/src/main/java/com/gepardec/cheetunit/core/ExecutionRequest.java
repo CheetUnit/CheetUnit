@@ -5,6 +5,7 @@
 
 package com.gepardec.cheetunit.core;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ public class ExecutionRequest {
 
     private String primaryClassName;
     private String methodName;
-    private String args;
+    private List<SerializedObject> args;
     private Map<String, String> classMap;
 
     public String getPrimaryClassName() {
@@ -33,11 +34,11 @@ public class ExecutionRequest {
         this.methodName = methodName;
     }
 
-    public String getArgs() {
+    public List<SerializedObject> getArgs() {
         return args;
     }
 
-    public void setArgs(String args) {
+    public void setArgs(List<SerializedObject> args) {
         this.args = args;
     }
 

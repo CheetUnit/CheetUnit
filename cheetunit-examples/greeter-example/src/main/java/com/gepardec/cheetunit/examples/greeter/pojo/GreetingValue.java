@@ -5,19 +5,17 @@
 
 package com.gepardec.cheetunit.examples.greeter.pojo;
 
-import java.io.Serializable;
+public class GreetingValue {
+    Salutation salutation;
+    String name;
 
-public class GreetingValue implements Serializable {
-  Salutation salutation;
-  String name;
+    public GreetingValue(Salutation salutation, String name) {
+        this.salutation = salutation;
+        this.name = name;
+    }
 
-  public GreetingValue(Salutation salutation, String name) {
-    this.salutation = salutation;
-    this.name = name;
-  }
-
-  @Override
-  public String toString() {
-    return salutation.getValue() + " " + name;
-  }
+    @Override
+    public String toString() {
+        return salutation.getValue() + " " + name;
+    }
 }
