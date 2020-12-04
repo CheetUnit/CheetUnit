@@ -6,11 +6,12 @@
 package com.gepardec.cheetunit.endpoint;
 
 import com.gepardec.cheetunit.core.ExecutionRequest;
+import com.gepardec.cheetunit.core.SerializedObject;
 
 public interface CheetUnitEndpoint {
 
     /**
      * executes request call and returns serialized result
      */
-    String execute(ExecutionRequest executionRequest);
+    SerializedObject execute(ExecutionRequest executionRequest);
 }
