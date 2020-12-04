@@ -20,7 +20,7 @@ import static com.gepardec.cheetunit.invokergenerator.helpers.ClassUtils.*;
 //    }
 public class BaseInvokerContentCreator {
 
-  private static final List<String> EXCLUDED_METHODS =
+  static final List<String> EXCLUDED_METHODS =
       Arrays.asList("wait", "equals", "toString", "hashCode", "getClass", "notify", "notifyAll");
 
   private static final List<String> EXCLUDED_IMPORT_PRIMITIVES =
@@ -75,7 +75,7 @@ public class BaseInvokerContentCreator {
     if (!"void".equals(method.getReturnType().getName())) {
       methodTextBuilder.append("return ");
     }
-    methodTextBuilder.append(extractClassName(invokedClass).toLowerCase());
+      methodTextBuilder.append(invokedClass.getSimpleName().toLowerCase());
     methodTextBuilder.append(".");
     methodTextBuilder.append(method.getName());
     methodTextBuilder.append("(");
@@ -145,13 +145,13 @@ public class BaseInvokerContentCreator {
   }
 
   private static String classInjection(Class<?> aClass) {
-    return indent() + "@Inject\n"
-        + indent() + "protected " + extractClassName(aClass) + " "
-        + extractClassName(aClass).toLowerCase() + ";\n";
+      return indent() + "@Inject\n"
+        + indent() + "protected " + aClass.getSimpleName() + " "
+        + aClass.getSimpleName().toLowerCase() + ";\n";
   }
 
   private static String classLine(Class<?> aClass) {
-    return "public abstract class " + extractClassName(aClass) + "BaseInvoker extends BaseServiceInvoker {\n";
+      return "public abstract class " + aClass.getSimpleName() + "BaseInvoker extends BaseServiceInvoker {\n";
   }
 
   private static String imports(Class<?> aClass) {
