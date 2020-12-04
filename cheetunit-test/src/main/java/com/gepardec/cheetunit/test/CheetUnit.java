@@ -77,7 +77,7 @@ public abstract class CheetUnit {
                     buildURL(config.getSchema(), config.getHost(), config.getPort(), config.getPath()),
                     classList);
 
-            return executor.execute(thisMethod.getName(), thisMethod.getParameterTypes(), args);
+            return executor.execute(thisMethod.getName(), args);
         }
 
         private String buildURL(String schema, String host, String port, String path) {

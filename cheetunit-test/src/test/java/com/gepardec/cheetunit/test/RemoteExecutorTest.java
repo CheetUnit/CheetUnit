@@ -53,7 +53,7 @@ class RemoteExecutorTest {
     void execute_verifyResponse_simpleString() {
         setupStubWithResponse("hello world");
 
-        Object result = remoteExecutor.execute("example method", new Class[]{String.class, Long.class, Double.class}, new Object[]{"arg1", 2L, 3D});
+        Object result = remoteExecutor.execute("example method", new Object[]{"arg1", 2L, 3D});
         assertEquals("hello world", result);
     }
 
@@ -62,7 +62,7 @@ class RemoteExecutorTest {
         Pojo pojo = new Pojo("Patzi", 28, LocalDate.of(1992, 5, 8));
         setupStubWithResponse(pojo);
 
-        Object result = remoteExecutor.execute("example method", new Class[]{String.class, Long.class, Double.class}, new Object[]{"arg1", 2L, 3D});
+        Object result = remoteExecutor.execute("example method", new Object[]{"arg1", 2L, 3D});
         assertEquals(pojo, result);
     }
 
@@ -70,7 +70,7 @@ class RemoteExecutorTest {
     void execute_verifyResponse_null() {
         setupStubWithResponse(null);
 
-        Object result = remoteExecutor.execute("example method", new Class[]{String.class, Long.class, Double.class}, new Object[]{"arg1", 2L, 3D});
+        Object result = remoteExecutor.execute("example method", new Object[]{"arg1", 2L, 3D});
         assertNull(result);
     }
 
@@ -82,7 +82,7 @@ class RemoteExecutorTest {
         setupStubWithResponse(cheetUnitException);
 
         assertThrows(CheetUnitException.class,
-                () -> remoteExecutor.execute("example method", new Class[]{String.class, Long.class, Double.class}, new Object[]{"arg1", 2L, 3D}),
+                () -> remoteExecutor.execute("example method", new Object[]{"arg1", 2L, 3D}),
                 message);
     }
 
@@ -92,14 +92,14 @@ class RemoteExecutorTest {
         setupStubWithResponse(exception);
 
         assertThrows(RemoteExecutionException.class,
-                () -> remoteExecutor.execute("example method", new Class[]{String.class, Long.class, Double.class}, new Object[]{"arg1", 2L, 3D}));
+                () -> remoteExecutor.execute("example method", new Object[]{"arg1", 2L, 3D}));
     }
 
     @Test
     void execute_verifyRequest() {
         setupStubWithResponse("hello world");
 
-        remoteExecutor.execute("example method", new Class[]{String.class, Long.class, Double.class}, new Object[]{"arg1", 2L, 3D});
+        remoteExecutor.execute("example method", new Object[]{"arg1", 2L, 3D});
 
         String expectedJson =
                 "{\n" +
@@ -140,17 +140,17 @@ class RemoteExecutorTest {
         }
     }
 
-    private void setupStubWithResponse(java.io.Serializable response) {
+    private void setupStubWithResponse(Object response) {
         // as we get a serialized and base64 encoded response from the server, we need to serialize and base64 on our own for tests
         SerializedObject body = serializeAndEncodeResponse(response);
         stubFor(post(urlEqualTo(PATH))
                 .withHeader("Content-Type", equalTo("application/json; charset=UTF-8"))
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withBody("{\"className\" : \"" + body.getClassName() + "\", \"serializedInstance\" : " + (body.getSerializedInstance() == null ? "null" : ("\"" + body.getSerializedInstance() +  "\"")) + "}")));
+                        .withBody("{\"serializedInstance\" : \"" + body.getSerializedInstance() +  "\"" + "}")));
     }
 
-    private SerializedObject serializeAndEncodeResponse(java.io.Serializable response) {
-        return SerializedObject.of(response, response == null ? String.class : response.getClass());
+    private SerializedObject serializeAndEncodeResponse(Object response) {
+        return SerializedObject.of(response);
     }
 }

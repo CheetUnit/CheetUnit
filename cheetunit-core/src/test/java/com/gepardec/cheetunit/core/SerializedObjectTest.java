@@ -5,7 +5,6 @@
 
 package com.gepardec.cheetunit.core;
 
-import com.gepardec.cheetunit.core.serialization.SerializationUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -17,8 +16,8 @@ class SerializedObjectTest {
 
     @Test
     public void simpleString(){
-        SerializedObject serializedObject = SerializedObject.of("abc", String.class);
-        assertEquals("abc", serializedObject.extractObject());
+        SerializedObject serializedObject = SerializedObject.of("abc");
+        assertEquals("abc", serializedObject.toObject());
     }
 
     @Test
@@ -38,8 +37,8 @@ class SerializedObjectTest {
         complexObject.setUuids(Arrays.asList(uuid1, uuid2));
         complexObject.setSimplies(new SimpleClass[]{simpleObject1, simpleObject2});
 
-        SerializedObject serializedObject = SerializedObject.of(complexObject, ComplexClass.class);
-        ComplexClass deserialized = (ComplexClass) serializedObject.extractObject();
+        SerializedObject serializedObject = SerializedObject.of(complexObject);
+        ComplexClass deserialized = (ComplexClass) serializedObject.toObject();
 
         assertEquals(2, deserialized.getUuids().size());
         assertEquals(uuid1, deserialized.getUuids().get(0));
@@ -50,7 +49,12 @@ class SerializedObjectTest {
         assertEquals("BlaBlubb", deserialized.getSimplies()[0].getStringField());
         assertEquals(6, deserialized.getSimplies()[1].getIntField());
         assertEquals("BlubbBla", deserialized.getSimplies()[1].getStringField());
-
     }
 
+    @Test
+    void nullObject() {
+        SerializedObject serializedObject = SerializedObject.of(null);
+        Object result = serializedObject.toObject();
+        assertNull(result);
+    }
 }

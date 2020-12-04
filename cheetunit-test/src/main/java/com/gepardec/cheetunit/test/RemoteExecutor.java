@@ -48,12 +48,11 @@ class RemoteExecutor {
      * Uses Serialization and Base64 decoding/encoding for transferring binary data.
      *
      * @param methodName which should be executed
-     * @param argTypes   class array containing the types of the arguments for the executing method
      * @param args       object array containing the arguments for the executing method
      * @return result of the method under test, which has been executed on the server side
      */
-    Object execute(String methodName, Class<?>[] argTypes, Object[] args) {
-        ExecutionRequest dto = ExecutionRequestFactory.create(methodName, argTypes, args, classes);
+    Object execute(String methodName, Object[] args) {
+        ExecutionRequest dto = ExecutionRequestFactory.create(methodName, args, classes);
 
         SerializedObject response = executeRestCall(dto);
 
@@ -61,7 +60,7 @@ class RemoteExecutor {
     }
 
     private Object unwrapResponse(SerializedObject response) {
-        Object returnObject = response.extractObject();
+        Object returnObject = response.toObject();
 
         if (returnObject instanceof CheetUnitException) {
             LOG.error("Something unexpected has happened on the server side.", (Exception) returnObject);

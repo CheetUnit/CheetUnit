@@ -23,7 +23,7 @@ class ExecutionRequestFactoryTest {
 
     @Test
     void create_assertProperties() {
-        ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", ARG_TYPES, ARGS, Collections.singletonList(ExecutionRequestFactory.class));
+        ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", ARGS, Collections.singletonList(ExecutionRequestFactory.class));
 
         Assertions.assertEquals("myMethodName", dto.getMethodName());
 
@@ -36,10 +36,10 @@ class ExecutionRequestFactoryTest {
 
     @Test
     void create_assertArgs() {
-        ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", ARG_TYPES, ARGS, Collections.singletonList(ExecutionRequestFactory.class));
+        ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", ARGS, Collections.singletonList(ExecutionRequestFactory.class));
 
         Assertions.assertNotNull(dto.getArgs());
-        List<Object> result = dto.getArgs().stream().map(SerializedObject::extractObject).collect(Collectors.toList());
+        List<Object> result = dto.getArgs().stream().map(SerializedObject::toObject).collect(Collectors.toList());
         Assertions.assertEquals(3, result.size());
         Assertions.assertEquals("param1", result.get(0));
         Assertions.assertEquals(2L, result.get(1));
@@ -48,7 +48,7 @@ class ExecutionRequestFactoryTest {
 
     @Test
     void create_assertClassMap() {
-        ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", ARG_TYPES, ARGS, Collections.singletonList(ExecutionRequestFactory.class));
+        ExecutionRequest dto = ExecutionRequestFactory.create("myMethodName", ARGS, Collections.singletonList(ExecutionRequestFactory.class));
 
         Assertions.assertNotNull(dto.getClassMap());
         Assertions.assertEquals(1, dto.getClassMap().size());

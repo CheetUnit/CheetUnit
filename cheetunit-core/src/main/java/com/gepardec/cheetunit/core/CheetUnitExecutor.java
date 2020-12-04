@@ -5,9 +5,6 @@
 
 package com.gepardec.cheetunit.core;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanManager;
@@ -40,10 +37,10 @@ public class CheetUnitExecutor {
             prepareClassloader(executionRequest);
             Object primaryObject = instantiatePrimaryObject(executionRequest);
 
-            Pair<Class<?>, Object> result = invokeRequestedMethod(primaryObject, executionRequest);
-            return SerializedObject.of(result.getRight(), result.getLeft());
+            Object result = invokeRequestedMethod(primaryObject, executionRequest);
+            return SerializedObject.of(result);
         } catch (Exception e) {
-            return SerializedObject.of(e, e.getClass());
+            return SerializedObject.of(e);
         }
     }
 
@@ -92,7 +89,7 @@ public class CheetUnitExecutor {
         return primaryObject;
     }
 
-    private Pair<Class<?>, Object> invokeRequestedMethod(Object primaryObject, ExecutionRequest executionRequest) {
+    private Object invokeRequestedMethod(Object primaryObject, ExecutionRequest executionRequest) {
 
         List<Method> methods = new ArrayList<>(Arrays.asList(primaryObject.getClass().getMethods()));
         methods.addAll(Arrays.asList(primaryObject.getClass().getDeclaredMethods()));
@@ -102,7 +99,7 @@ public class CheetUnitExecutor {
         for (Method method : methods) {
             if (method.getName().equals(executionRequest.getMethodName()) && methodParametersMatching(method, args)) {
                 try {
-                    return new ImmutablePair<>(method.getReturnType(), method.invoke(primaryObject, args));
+                    return method.invoke(primaryObject, args);
                 } catch (Exception e) {
 
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -127,7 +124,7 @@ public class CheetUnitExecutor {
         List<SerializedObject> args = executionRequest.getArgs();
         List<Object> arguments = new ArrayList<>();
         for (SerializedObject arg : args) {
-            arguments.add(arg.extractObject());
+            arguments.add(arg.toObject());
         }
 
         return arguments.toArray();
