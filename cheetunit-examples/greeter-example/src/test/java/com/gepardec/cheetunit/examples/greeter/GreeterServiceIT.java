@@ -40,18 +40,6 @@ class GreeterServiceIT {
   }
 
   @Test
-  public void getGreetingByNames() {
-    String result = service.greet("Harry", "Ron", "Hermione");
-    Assertions.assertEquals("Hello Harry, Ron, Hermione!", result);
-  }
-
-  @Test
-  public void getGreetingBySalutationAndNames() {
-    String result = service.greet(Salutation.PROFESSOR, "Dumbledore", "Harry", "Ron", "Hermione");
-    Assertions.assertEquals("Hello Prof. Dumbledore, Harry, Ron, Hermione!", result);
-  }
-
-  @Test
   public void getGreetingBySalutationAndNamesTwo() {
     String result = service.greet(Salutation.PROFESSOR, "Dumbledore", new String[0]);
     Assertions.assertEquals("Hello Prof. Dumbledore!", result);

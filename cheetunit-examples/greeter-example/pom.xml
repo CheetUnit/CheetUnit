@@ -43,4 +43,44 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.gepardec.cheetunit</groupId>
+                <artifactId>cheetunit-invoker-generator-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <configuration>
+                    <destinationFolder>${project.basedir}/src-gen/cheetunitinvokers</destinationFolder>
+                    <packagesToScan>
+                        <packageToScan>com.gepardec.cheetunit</packageToScan>
+                    </packagesToScan>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate-base-invokers</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.basedir}/src-gen/cheetunitinvokers</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

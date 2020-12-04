@@ -5,38 +5,12 @@
 
 package com.gepardec.cheetunit.examples.greeter;
 
-import com.gepardec.cheetunit.examples.greeter.pojo.GreetingValue;
-import com.gepardec.cheetunit.examples.greeter.pojo.Salutation;
-import com.gepardec.cheetunit.examples.greeter.service.GreeterService;
+import com.gepardec.cheetunit.examples.greeter.service.GreeterServiceBaseInvoker;
 import com.gepardec.cheetunit.test.BaseServiceInvoker;
 import com.gepardec.cheetunit.test.CheetUnitConfig;
+import com.gepardec.cheetunit.test.CheetUnitConfigProvider;
 
-import javax.inject.Inject;
-
-public class GreeterInvoker extends BaseServiceInvoker {
-
-  @Inject
-  private GreeterService service;
-
-  public String greet(String name) {
-    return service.greet(name);
-  }
-
-  public String greet(Salutation salutation, String name) {
-    return service.greet(salutation, name);
-  }
-
-  public String greet(GreetingValue greetingValue) {
-    return service.greet(greetingValue);
-  }
-
-  public String greet(String... names) {
-    return service.greet(names);
-  }
-
-  public String greet(Salutation salutation, String name, String... otherNames) {
-    return service.greet(salutation, name, otherNames);
-  }
+public class GreeterInvoker extends GreeterServiceBaseInvoker {
 
   @Override
   public CheetUnitConfig getConfig() {

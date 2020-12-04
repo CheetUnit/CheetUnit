@@ -9,6 +9,10 @@ import com.gepardec.cheetunit.examples.greeter.pojo.GreetingValue;
 import com.gepardec.cheetunit.examples.greeter.pojo.Salutation;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
 
 @ApplicationScoped
 public class GreeterService {
