@@ -15,6 +15,7 @@
     <modules>
         <module>hello-world-example</module>
         <module>greeter-example</module>
+        <module>school-example</module>
     </modules>
 
 
