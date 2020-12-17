@@ -13,4 +13,5 @@ public interface Dao<E extends Object> {
     E update(E entity);
     E create(E entity);
     void remove(E entity);
+    void detach(E entity);
 }

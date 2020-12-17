@@ -78,4 +78,16 @@ public class Person {
         this.coursesParticipating.remove(course);
         course.getParticipants().remove(this);
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCoursesTeached(Set<Course> coursesTeached) {
+        this.coursesTeached = coursesTeached;
+    }
+
+    public void setCoursesParticipating(Set<Course> coursesParticipating) {
+        this.coursesParticipating = coursesParticipating;
+    }
 }

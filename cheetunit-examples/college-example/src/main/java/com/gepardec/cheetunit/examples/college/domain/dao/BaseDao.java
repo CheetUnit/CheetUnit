@@ -8,11 +8,13 @@ package com.gepardec.cheetunit.examples.college.domain.dao;
 import com.gepardec.cheetunit.examples.college.domain.DomainException;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Typed;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+@Typed({BaseDao.class})
 public class BaseDao<E> implements Dao<E> {
 
     private Class<E> persistentClass;
@@ -72,6 +74,15 @@ public class BaseDao<E> implements Dao<E> {
     public void remove(E entity) {
         try {
             em.remove(update(entity));
+        } catch (Exception e) {
+            throw new DomainException(e);
+        }
+    }
+
+    @Override
+    public void detach(E entity) {
+        try {
+            em.detach(update(entity));
         } catch (Exception e) {
             throw new DomainException(e);
         }

@@ -7,6 +7,7 @@ package com.gepardec.cheetunit.examples.college.service;
 
 import com.gepardec.cheetunit.examples.college.domain.Person;
 import com.gepardec.cheetunit.test.CheetUnit;
+import com.thoughtworks.xstream.XStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +25,7 @@ class PersonServiceIT {
 
     @Test
     void getAllPersons() {
-        personService.getAllPersons();
+        List<Person> persons = personService.getAllPersons();
+        System.out.println(new XStream().toXML(persons));
     }
 }
