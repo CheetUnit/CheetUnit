@@ -25,7 +25,7 @@ public abstract class CheetUnit {
 
     static {
         // resolve cheet unit test properties once
-        TestPropertyResolver propertyResolver = new TestPropertyResolver(propertyFileName());
+        CheetUnitPropertyResolver propertyResolver = new CheetUnitPropertyResolver(propertyFileName());
         propertyResolver.resolveProperties();
     }
 

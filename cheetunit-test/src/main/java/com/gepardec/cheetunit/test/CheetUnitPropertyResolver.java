@@ -16,13 +16,13 @@ import java.util.Properties;
  * Resolves the given property fileName in the classpath and adds all properties to the system properties. <br />
  * If a property is already set (e.g. passed as a cli parameter) the files property will be ignored.
  */
-class TestPropertyResolver {
+class CheetUnitPropertyResolver {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheetUnitProperties.class);
 
     private final String fileName;
 
-    public TestPropertyResolver(String fileName) {
+    public CheetUnitPropertyResolver(String fileName) {
         this.fileName = fileName;
     }
 
