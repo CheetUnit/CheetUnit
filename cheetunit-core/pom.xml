@@ -33,6 +33,10 @@
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.dozermapper</groupId>
+            <artifactId>dozer-core</artifactId>
+        </dependency>
         <!-- test dependencies-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

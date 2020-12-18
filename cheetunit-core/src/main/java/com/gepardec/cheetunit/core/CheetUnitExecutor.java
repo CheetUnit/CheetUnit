@@ -5,6 +5,8 @@
 
 package com.gepardec.cheetunit.core;
 
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
+
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanManager;
@@ -19,6 +21,9 @@ public class CheetUnitExecutor {
 
     @Inject
     private BeanManager beanManager;
+
+    @Inject
+    private TransactionSupport transactionSupport;
 
     @SuppressWarnings("CdiInjectionPointsInspection")
     @Inject
@@ -36,7 +41,6 @@ public class CheetUnitExecutor {
 
             prepareClassloader(executionRequest);
             Object primaryObject = instantiatePrimaryObject(executionRequest);
-
             Object result = invokeRequestedMethod(primaryObject, executionRequest);
             return SerializedObject.of(result);
         } catch (Exception e) {
@@ -99,9 +103,13 @@ public class CheetUnitExecutor {
         for (Method method : methods) {
             if (method.getName().equals(executionRequest.getMethodName()) && methodParametersMatching(method, args)) {
                 try {
-                    return method.invoke(primaryObject, args);
+                    transactionSupport.beginTx();
+                    Object object = method.invoke(primaryObject, args);
+                    object = ProxyUnwrapper.unwrap(object, method.getReturnType());
+                    transactionSupport.commitTx();
+                    return object;
                 } catch (Exception e) {
-
+                    transactionSupport.rollbackTx();
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     PrintStream printStream = new PrintStream(stream);
                     e.printStackTrace(printStream);

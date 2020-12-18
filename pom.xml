@@ -29,6 +29,7 @@
         <commons-io.version>2.6</commons-io.version>
         <wiremock.version>2.27.2</wiremock.version>
         <xstream.version>1.4.14</xstream.version>
+        <dozer.version>6.5.0</dozer.version>
         <logback.version>1.2.3</logback.version>
     </properties>
 
@@ -76,6 +77,11 @@
                 <groupId>com.thoughtworks.xstream</groupId>
                 <artifactId>xstream</artifactId>
                 <version>${xstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.dozermapper</groupId>
+                <artifactId>dozer-core</artifactId>
+                <version>${dozer.version}</version>
             </dependency>
             <!-- test dependencies -->
             <dependency>
