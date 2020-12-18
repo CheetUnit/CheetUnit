@@ -5,7 +5,7 @@
 
 package com.gepardec.cheetunit.test;
 
-import static com.gepardec.cheetunit.test.TestProperties.*;
+import static com.gepardec.cheetunit.test.CheetUnitProperties.*;
 
 /**
  * Base class for service invoker

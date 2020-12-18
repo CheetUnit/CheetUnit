@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.gepardec.cheetunit.test.TestProperties.propertyFileName;
+import static com.gepardec.cheetunit.test.CheetUnitProperties.propertyFileName;
 
 public abstract class CheetUnit {
 

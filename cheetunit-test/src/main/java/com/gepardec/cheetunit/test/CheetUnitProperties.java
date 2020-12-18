@@ -8,28 +8,20 @@ package com.gepardec.cheetunit.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.TimeUnit;
+class CheetUnitProperties {
 
-class TestProperties {
-
-    private static final Logger LOG = LoggerFactory.getLogger(TestProperties.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CheetUnitProperties.class);
 
     /**
      * Configures connect timeout for the httpClient in milliseconds
-     *
-     * @see okhttp3.OkHttpClient.Builder#connectTimeout(long, TimeUnit)
      */
     static final String CONNECT_TIMEOUT = System.getProperty("cheetunit.httpclient.connecttimeout");
     /**
      * Configures read timeout for the httpClient in milliseconds
-     *
-     * @see okhttp3.OkHttpClient.Builder#readTimeout(long, TimeUnit)
      */
     static final String READ_TIMEOUT = System.getProperty("cheetunit.httpclient.readtimeout");
     /**
      * Configures write timeout for the httpClient in milliseconds
-     *
-     * @see okhttp3.OkHttpClient.Builder#writeTimeout(long, TimeUnit)
      */
     static final String WRITE_TIMEOUT = System.getProperty("cheetunit.httpclient.writetimeout");
 

@@ -99,14 +99,14 @@ class RemoteExecutor {
     private OkHttpClient buildHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        if (TestProperties.CONNECT_TIMEOUT != null) {
-            builder.connectTimeout(Integer.parseInt(TestProperties.CONNECT_TIMEOUT), TimeUnit.MILLISECONDS);
+        if (CheetUnitProperties.CONNECT_TIMEOUT != null) {
+            builder.connectTimeout(Integer.parseInt(CheetUnitProperties.CONNECT_TIMEOUT), TimeUnit.MILLISECONDS);
         }
-        if (TestProperties.READ_TIMEOUT != null) {
-            builder.readTimeout(Integer.parseInt(TestProperties.READ_TIMEOUT), TimeUnit.MILLISECONDS);
+        if (CheetUnitProperties.READ_TIMEOUT != null) {
+            builder.readTimeout(Integer.parseInt(CheetUnitProperties.READ_TIMEOUT), TimeUnit.MILLISECONDS);
         }
-        if (TestProperties.WRITE_TIMEOUT != null) {
-            builder.writeTimeout(Integer.parseInt(TestProperties.WRITE_TIMEOUT), TimeUnit.MILLISECONDS);
+        if (CheetUnitProperties.WRITE_TIMEOUT != null) {
+            builder.writeTimeout(Integer.parseInt(CheetUnitProperties.WRITE_TIMEOUT), TimeUnit.MILLISECONDS);
         }
 
         return builder.build();

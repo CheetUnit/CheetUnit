@@ -18,7 +18,7 @@ import java.util.Properties;
  */
 class TestPropertyResolver {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TestProperties.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CheetUnitProperties.class);
 
     private final String fileName;
 
