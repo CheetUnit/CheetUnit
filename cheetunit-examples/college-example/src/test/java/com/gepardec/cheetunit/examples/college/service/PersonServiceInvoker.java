@@ -29,10 +29,4 @@ public class PersonServiceInvoker extends BaseServiceInvoker {
     public Person getPersonById(Long id) {
        return service.getPersonById(id);
     }
-
-    @Override
-    public CheetUnitConfig getConfig() {
-        // TODO use properties instead of override of getConfig
-        return new CheetUnitConfig("http", "localhost", "8080", "college-example/rest/cheetunit-insider", getAdditionalClasses());
-    }
 }
