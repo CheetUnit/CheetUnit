@@ -6,6 +6,7 @@
 package com.gepardec.cheetunit.examples.college.domain;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +23,9 @@ public class Person {
 
     @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false)
+    private LocalDate birthday;
 
     @OneToMany(mappedBy = "teacher")
     private Set<Course> coursesTeached = new HashSet<>();
@@ -89,5 +93,13 @@ public class Person {
 
     public void setCoursesParticipating(Set<Course> coursesParticipating) {
         this.coursesParticipating = coursesParticipating;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 }

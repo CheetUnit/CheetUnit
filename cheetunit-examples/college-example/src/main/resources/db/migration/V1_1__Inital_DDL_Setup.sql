@@ -12,7 +12,8 @@ create table person
         constraint person_pkey
             primary key,
     firstname varchar(255) not null,
-    lastname varchar(255) not null
+    lastname varchar(255) not null,
+    birthday date not null
 );
 alter table person owner to cheetunit;
 
