@@ -5,9 +5,13 @@
 
 package com.gepardec.cheetunit.test;
 
-public class CheetUnitConfig {
+import static com.gepardec.cheetunit.endpoint.CheetUnitEndpoint.CHEETUNIT_ENDPOINT;
 
-    public static final CheetUnitConfig DEFAULT_LOCALHOST = new CheetUnitConfig("http", "localhost", "8080", "cheetunit-insider");
+/**
+ * Holds all relevant configuration for cheet unit like the URL information of the insider endpoint
+ * or which classes will be send to the server side
+ */
+public class CheetUnitConfig {
 
     private final String schema;
     private final String host;
@@ -15,7 +19,11 @@ public class CheetUnitConfig {
     private final String path;
     private final Class<?>[] additionalClasses;
 
-    public CheetUnitConfig(String schema, String host, String port, String path, Class<?>... additionalClasses) {
+    public static CheetUnitConfig of(String schema, String host, String port, String path, Class<?>... additionalClasses) {
+        return new CheetUnitConfig(schema, host, port, path + CHEETUNIT_ENDPOINT, additionalClasses);
+    }
+
+    private CheetUnitConfig(String schema, String host, String port, String path, Class<?>... additionalClasses) {
         this.schema = schema;
         this.host = host;
         this.port = port;

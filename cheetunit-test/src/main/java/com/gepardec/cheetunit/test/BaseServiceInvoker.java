@@ -5,19 +5,16 @@
 
 package com.gepardec.cheetunit.test;
 
+import static com.gepardec.cheetunit.test.CheetUnitProperties.*;
+
 /**
  * Base class for service invoker
  */
 public abstract class BaseServiceInvoker implements CheetUnitConfigProvider {
 
-    private static final String HOST_PROTOCOL = System.getProperty("cheetunit.host.protocol", "http");
-    private static final String HOST_NAME = System.getProperty("cheetunit.host.name", "localhost");
-    private static final String HOST_PORT = System.getProperty("cheetunit.host.port", "8080");
-    private static final String PATH = System.getProperty("cheetunit.path", "cheetunit-insider");
-
     @Override
     public CheetUnitConfig getConfig() {
-        return new CheetUnitConfig(HOST_PROTOCOL, HOST_NAME, HOST_PORT, PATH, getAdditionalClasses());
+        return CheetUnitConfig.of(hostProtocol(), hostName(), hostPort(), path(), getAdditionalClasses());
     }
 
     /**
