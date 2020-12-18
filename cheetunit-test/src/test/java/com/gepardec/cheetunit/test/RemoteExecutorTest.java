@@ -16,13 +16,13 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Objects;
 
+import static com.gepardec.cheetunit.endpoint.CheetUnitEndpoint.CHEETUNIT_ENDPOINT;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RemoteExecutorTest {
 
-    private static final String PATH = "/cheetunit-insider";
     private static final int PORT = 8089; // don't use 8080 to avoid port already in usage problems
     private static final String HOST = "localhost";
 
@@ -35,7 +35,7 @@ class RemoteExecutorTest {
         wireMockServer = new WireMockServer(wireMockConfig().port(PORT));
         wireMockServer.start();
         remoteExecutor = RemoteExecutor.of(
-                "http://" + HOST + ":" + PORT + PATH,
+                "http://" + HOST + ":" + PORT + CHEETUNIT_ENDPOINT,
                 Collections.singletonList(RemoteExecutorTest.class));
     }
 
@@ -109,7 +109,7 @@ class RemoteExecutorTest {
                         "  \"classMap\" : \"${json-unit.ignore}\"\n" +
                         "}";
 
-        verify(exactly(1), postRequestedFor(urlEqualTo(PATH))
+        verify(exactly(1), postRequestedFor(urlEqualTo(CHEETUNIT_ENDPOINT))
                 .withRequestBody(equalToJson(expectedJson)));
     }
 
@@ -143,7 +143,7 @@ class RemoteExecutorTest {
     private void setupStubWithResponse(Object response) {
         // as we get a serialized and base64 encoded response from the server, we need to serialize and base64 on our own for tests
         SerializedObject body = serializeAndEncodeResponse(response);
-        stubFor(post(urlEqualTo(PATH))
+        stubFor(post(urlEqualTo(CHEETUNIT_ENDPOINT))
                 .withHeader("Content-Type", equalTo("application/json; charset=UTF-8"))
                 .willReturn(aResponse()
                         .withStatus(200)
