@@ -5,6 +5,8 @@
 
 package com.gepardec.cheetunit.test;
 
+import static com.gepardec.cheetunit.endpoint.CheetUnitEndpoint.CHEETUNIT_ENDPOINT;
+
 /**
  * Holds all relevant configuration for cheet unit like the URL information of the insider endpoint
  * or which classes will be send to the server side
@@ -18,7 +20,7 @@ public class CheetUnitConfig {
     private final Class<?>[] additionalClasses;
 
     public static CheetUnitConfig of(String schema, String host, String port, String path, Class<?>... additionalClasses) {
-        return new CheetUnitConfig(schema, host, port, path, additionalClasses);
+        return new CheetUnitConfig(schema, host, port, path + CHEETUNIT_ENDPOINT, additionalClasses);
     }
 
     private CheetUnitConfig(String schema, String host, String port, String path, Class<?>... additionalClasses) {
