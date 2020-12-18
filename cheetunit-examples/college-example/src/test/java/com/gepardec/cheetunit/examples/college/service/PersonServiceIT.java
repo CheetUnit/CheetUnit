@@ -7,9 +7,10 @@ package com.gepardec.cheetunit.examples.college.service;
 
 import com.gepardec.cheetunit.examples.college.domain.Person;
 import com.gepardec.cheetunit.test.CheetUnit;
-import com.thoughtworks.xstream.XStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
@@ -24,8 +25,17 @@ class PersonServiceIT {
 
 
     @Test
-    void getAllPersons() {
+    void testGetAllPersons() {
         List<Person> persons = personService.getAllPersons();
-        System.out.println(new XStream().toXML(persons));
+        assertEquals(6, persons.size());
+        assertEquals(1, persons.stream().filter(person -> person.getId() == -2L).map(Person::getCoursesTeached).count());
+    }
+
+    @Test
+    void testGetAPerson() {
+        Person person = personService.getPersonById(-4L);
+        assertNotNull(person);
+        assertEquals(2, person.getCoursesParticipating().size());
+        assertTrue(person.getCoursesTeached().isEmpty());
     }
 }
