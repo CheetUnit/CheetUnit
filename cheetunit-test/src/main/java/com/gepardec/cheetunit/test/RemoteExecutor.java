@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Remote executor for transferring all necessary artifacts to the server and executing the class under test from client side (e.g. unit test) on the server side.
@@ -75,7 +76,7 @@ class RemoteExecutor {
     }
 
     private SerializedObject executeRestCall(ExecutionRequest dto) {
-        OkHttpClient httpClient = new OkHttpClient();
+        OkHttpClient httpClient = buildHttpClient();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String json = objectMapper.writeValueAsString(dto);
@@ -93,6 +94,22 @@ class RemoteExecutor {
         } catch (Exception e) {
             throw new CheetUnitClientException(e);
         }
+    }
+
+    private OkHttpClient buildHttpClient() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        if (CheetUnitProperties.CONNECT_TIMEOUT != null) {
+            builder.connectTimeout(Integer.parseInt(CheetUnitProperties.CONNECT_TIMEOUT), TimeUnit.MILLISECONDS);
+        }
+        if (CheetUnitProperties.READ_TIMEOUT != null) {
+            builder.readTimeout(Integer.parseInt(CheetUnitProperties.READ_TIMEOUT), TimeUnit.MILLISECONDS);
+        }
+        if (CheetUnitProperties.WRITE_TIMEOUT != null) {
+            builder.writeTimeout(Integer.parseInt(CheetUnitProperties.WRITE_TIMEOUT), TimeUnit.MILLISECONDS);
+        }
+
+        return builder.build();
     }
 
 }

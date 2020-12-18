@@ -9,7 +9,6 @@ import com.gepardec.cheetunit.examples.greeter.pojo.GreetingValue;
 import com.gepardec.cheetunit.examples.greeter.pojo.Salutation;
 import com.gepardec.cheetunit.examples.greeter.service.GreeterService;
 import com.gepardec.cheetunit.test.BaseServiceInvoker;
-import com.gepardec.cheetunit.test.CheetUnitConfig;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -37,12 +36,6 @@ public class GreeterInvoker extends BaseServiceInvoker {
 
   public String greet(Salutation salutation, String name, String... otherNames) {
     return service.greet(salutation, name, otherNames);
-  }
-
-  @Override
-  public CheetUnitConfig getConfig() {
-    // TODO use properties instead of override of getConfig
-    return new CheetUnitConfig("http", "localhost", "8080", "greeter/rest/cheetunit-insider", getAdditionalClasses());
   }
 
   public LocalDate getNextDay(LocalDate aDay){

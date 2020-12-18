@@ -17,9 +17,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.gepardec.cheetunit.test.CheetUnitProperties.propertyFileName;
+
 public abstract class CheetUnit {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheetUnit.class);
+
+    static {
+        // resolve cheet unit test properties once
+        CheetUnitPropertyResolver propertyResolver = new CheetUnitPropertyResolver(propertyFileName());
+        propertyResolver.resolveProperties();
+    }
 
     private CheetUnit() {
         // no instantiation allowed
@@ -51,9 +59,8 @@ public abstract class CheetUnit {
             CheetUnitConfigProvider configProvider = (CheetUnitConfigProvider) constructors[0].newInstance();
             return configProvider.getConfig();
         }
-        LOG.info("No CheetUnitConfig provided by class {}. Fallback to default config.", clazz.getSimpleName());
-        return CheetUnitConfig.DEFAULT_LOCALHOST;
-
+        LOG.error("Class {} doesn't implement CheetUnitConfigProvider.", clazz.getSimpleName());
+        throw new CheetUnitClientException("No config provider found.");
     }
 
     private static class CheetUnitMethodHandler<T> implements MethodHandler {

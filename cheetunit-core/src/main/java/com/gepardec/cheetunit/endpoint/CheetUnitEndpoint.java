@@ -10,6 +10,8 @@ import com.gepardec.cheetunit.core.SerializedObject;
 
 public interface CheetUnitEndpoint {
 
+    String CHEETUNIT_ENDPOINT = "/cheetunit-insider";
+
     /**
      * executes request call and returns serialized result
      */
