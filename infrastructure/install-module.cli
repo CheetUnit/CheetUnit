@@ -10,7 +10,7 @@ echo Add driver
     driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
 
 echo Add CollegeExampleDS datasource
-# TODO use enviroment variables instead of hardcoded values
+# TODO #20 use enviroment variables instead of hardcoded values
 # data-source add --jndi-name=${env.JNDI_NAME} \
 #    --name=${env.DS_NAME} \
 #    --connection-url=jdbc:postgresql://${env.DB_HOST}:${env.DB_PORT}/${env.DB_NAME} \

@@ -1,5 +1,7 @@
 version: '3'
 
+# TODO remove probably
+
 services:
   postgres:
     image: postgres
