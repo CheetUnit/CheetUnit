@@ -8,12 +8,14 @@ package com.gepardec.cheetunit.examples.college.service;
 import com.gepardec.cheetunit.examples.college.domain.Person;
 import com.gepardec.cheetunit.test.CheetUnit;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+@Disabled
 class PersonServiceIT {
 
     private static PersonServiceInvoker personService;
