@@ -21,7 +21,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B clean install
+      run: mvn -B clean install -DskipITs=true -DskipUnitTests=false
     - name: Pre Integration Test
 #      run: docker-compose up --build -d
       run: |
@@ -35,7 +35,7 @@ jobs:
         cd ../..
         echo "Start JBoss"
         docker build -t cheetunit-jboss .
-        docker -d run -p 8080:8080 --net=cheetunit -e DB_HOST=postgres -e DB_PORT=5432 -e DB_NAME=cheetunit -e DB_USER=cheetunit -e DB_PASS=cheetunit -e DS_NAME=CollegeExampleDS -e JNDI_NAME=java:jboss/datasources/CollegeExampleDS --name cheetunit-jboss cheetunit-jboss
+        docker run -d -p 8080:8080 --net=cheetunit -e DB_HOST=postgres -e DB_PORT=5432 -e DB_NAME=cheetunit -e DB_USER=cheetunit -e DB_PASS=cheetunit -e DS_NAME=CollegeExampleDS -e JNDI_NAME=java:jboss/datasources/CollegeExampleDS --name cheetunit-jboss cheetunit-jboss
     - name: Integration Test
       run: mvn verify -DskipITs=false -DskipUnitTests=true
     - name: Post Integration Test
