@@ -36,7 +36,6 @@ jobs:
         cd ../..
         echo "Start JBoss"
         docker build -t cheetunit-jboss .
-#        TOOD use environment variables
         docker run -d -p 8080:8080 --net=cheetunit \
           -e DB_HOST=postgres \
           -e DB_PORT=5432 \
@@ -55,6 +54,3 @@ jobs:
         docker rm -f postgres
         docker network rm cheetunit
         docker image rm cheetunit-jboss
-#      run: docker-compose down
-
-
