@@ -21,7 +21,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B clean install package --file pom.xml
+      run: mvn -B clean install
     - name: Pre Integration Test
 #      run: docker-compose up --build -d
       run: |
