@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  jboss:
+    image: cheetunit-jboss
+    container_name: jboss
+    build: .
+    ports:
+      - "8080:8080"
+      - "9990:9990"
