@@ -1,0 +1,42 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: CI Pipeline
+
+on: [push, pull_request]
+#  push:
+#    branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+    - name: Pre Integration Test
+#      run: docker-compose up --build -d
+      run: |
+        echo "Create network"
+        docker network create cheetunit
+        echo "Start postgres"
+        docker run -d -p 5432:5432 --net=cheetunit -e POSTGRES_DB=cheetunit -e POSTGRES_USER=cheetunit -e POSTGRES_PASSWORD=cheetunit --name postgres postgres
+        echo "Migrate database"
+        cd ./cheetunit-examples/college-example/
+        mvn flyway:migrate
+        cd ../..
+        echo "Start JBoss"
+        docker build -t cheetunit-jboss .
+        docker -d run -p 8080:8080 --net=cheetunit -e DB_HOST=postgres -e DB_PORT=5432 -e DB_NAME=cheetunit -e DB_USER=cheetunit -e DB_PASS=cheetunit -e DS_NAME=CollegeExampleDS -e JNDI_NAME=java:jboss/datasources/CollegeExampleDS --name cheetunit-jboss cheetunit-jboss
+    - name: Integration Test
+      run: mvn verify -DskipITs=false -DskipUnitTests=true
+    - name: Post Integration Test
+      run: docker-compose stop jboss

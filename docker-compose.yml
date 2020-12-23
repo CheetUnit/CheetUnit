@@ -1,6 +1,24 @@
 version: '3'
 
 services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=cheetunit
+      - POSTGRES_USER=cheetunit
+      - POSTGRES_PASSWORD=cheetunit
+  migrate:
+    image: maven:3.3-jdk-8
+    container_name: maven-jdk8
+    volumes:
+    - .:/usr/src/mymaven
+    working_dir: /usr/src/mymaven/cheetunit-examples/college-example
+    command: mvn flyway:migrate
+    depends_on:
+      - postgres
   jboss:
     image: cheetunit-jboss
     container_name: jboss
@@ -8,3 +26,14 @@ services:
     ports:
       - "8080:8080"
       - "9990:9990"
+    environment:
+      - DB_HOST=localhost
+      - DB_PORT=5432
+      - DB_NAME=cheetunit
+      - DB_USER=cheetunit
+      - DB_PASS=cheetunit
+      - DS_NAME=CollegeExampleDS
+      - JNDI_NAME=java:jboss/datasources/CollegeExampleDS
+    depends_on:
+      - migrate
+

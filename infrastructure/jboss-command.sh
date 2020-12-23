@@ -20,8 +20,8 @@ wait_for_wildfly
 echo "==> Enable cheetunit..."
 $JBOSS_CLI -c --file=`dirname "$0"`/set-cheetunit-property.cli
 
-#echo "==> Setup Datasource..."
-#$JBOSS_CLI -c --file=`dirname "$0"`/module-install.cli
+echo "==> Setup Datasource..."
+$JBOSS_CLI -c --file=`dirname "$0"`/install-module.cli
 
 echo "==> Shutting down WildFly..."
 if [ "$JBOSS_MODE" = "standalone" ]; then

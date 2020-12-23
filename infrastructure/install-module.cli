@@ -1,0 +1,27 @@
+batch
+
+echo Add postgresql driver as module
+module add --name=org.postgresql --resources=/tmp/postgresql-42.2.5.jar --dependencies=javax.api,javax.transaction.api
+
+echo Add driver
+/subsystem=datasources/jdbc-driver=postgresql:add(\
+    driver-name=postgresql, \
+    driver-module-name=org.postgresql, \
+    driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
+echo Add CollegeExampleDS datasource
+# TODO use enviroment variables instead of hardcoded values
+# data-source add --jndi-name=${env.JNDI_NAME} \
+#    --name=${env.DS_NAME} \
+#    --connection-url=jdbc:postgresql://${env.DB_HOST}:${env.DB_PORT}/${env.DB_NAME} \
+#    --driver-name=postgresql \
+#    --user-name=${env.DB_USER} \
+#    --password=${env.DB_PASS}
+data-source add --jndi-name=java:jboss/datasources/CollegeExampleDS \
+   --name=CollegeExampleDS \
+   --connection-url=jdbc:postgresql://postgres:5432/cheetunit \
+   --driver-name=postgresql \
+   --user-name=cheetunit \
+   --password=cheetunit
+
+run-batch
