@@ -23,7 +23,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Pre Integration Test
-      run: docker-compose up --build &
+      run: docker-compose up --build -d
     - name: Integration Test
       run: mvn verify -DskipITs=false -DskipUnitTests=true
     - name: Post Integration Test
