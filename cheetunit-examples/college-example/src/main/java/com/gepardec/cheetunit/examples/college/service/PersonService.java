@@ -24,7 +24,8 @@ public class PersonService {
     }
 
     public Person getPersonById(Long id) {
-        return personDao.findById(id);
+        return null;
+//        return personDao.findById(id);
     }
 
     public void addPerson(Person person) {
