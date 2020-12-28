@@ -5,7 +5,7 @@
 
 package com.gepardec.cheetunit.core;
 
-import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import com.gepardec.cheetunit.core.annotations.CheetUnitNoTransactionRequired;
 
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.AnnotatedType;
@@ -103,13 +103,19 @@ public class CheetUnitExecutor {
         for (Method method : methods) {
             if (method.getName().equals(executionRequest.getMethodName()) && methodParametersMatching(method, args)) {
                 try {
-                    transactionSupport.beginTx();
+                    if (!method.isAnnotationPresent(CheetUnitNoTransactionRequired.class)) {
+                        transactionSupport.beginTx();
+                    }
                     Object object = method.invoke(primaryObject, args);
                     object = ProxyUnwrapper.unwrap(object, method.getReturnType());
-                    transactionSupport.commitTx();
+                    if (!method.isAnnotationPresent(CheetUnitNoTransactionRequired.class)) {
+                        transactionSupport.commitTx();
+                    }
                     return object;
                 } catch (Exception e) {
-                    transactionSupport.rollbackTx();
+                    if (!method.isAnnotationPresent(CheetUnitNoTransactionRequired.class)) {
+                        transactionSupport.rollbackTx();
+                    }
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     PrintStream printStream = new PrintStream(stream);
                     e.printStackTrace(printStream);
