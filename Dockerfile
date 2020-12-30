@@ -12,7 +12,7 @@ COPY infrastructure/postgresql-42.2.5.jar ./
 COPY infrastructure/jboss-command.sh ./
 COPY infrastructure/set-cheetunit-property.cli ./
 COPY infrastructure/install-module.cli ./
-# search and replace
+# convert DOS line endings to unix
 RUN sed -i -e 's/\r$//' ./jboss-command.sh
 RUN chmod +x ./jboss-command.sh
 RUN ./jboss-command.sh &&  rm -rf $JBOSS_HOME/standalone/configuration/standalone_xml_history/

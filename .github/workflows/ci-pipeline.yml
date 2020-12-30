@@ -33,7 +33,7 @@ jobs:
           -e POSTGRES_DB=cheetunit \
           -e POSTGRES_USER=cheetunit \
           -e POSTGRES_PASSWORD=cheetunit \
-          --name postgres postgres:13.1
+          --name postgres postgres:12.5
         echo "=> Migrate database"
         cd ./cheetunit-examples/college-example/
         mvn flyway:migrate
@@ -45,7 +45,7 @@ jobs:
       run: mvn verify -DskipITs=false -DskipUnitTests=true
     - name: Post Integration Test
       run: |
-        echo "Remove containers and network"
+        echo "=> Remove containers and network"
         docker rm -f cheetunit-jboss
         docker rm -f postgres
         docker network rm cheetunit
