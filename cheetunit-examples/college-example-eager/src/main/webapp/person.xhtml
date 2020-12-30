@@ -8,7 +8,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:form="http://www.springframework.org/tags/form">
 <f:metadata>
     <f:viewParam name="pid" value="#{personPageController.personId}"/>
 </f:metadata>
@@ -19,6 +19,50 @@
 <h:body>
     <h1 class="whiteOnGreen centered">[#{personPageController.personId}] #{personPageController.person.firstName} #{personPageController.person.lastName}</h1>
 
-    <span class="TBD">TBD: Provide more Data about this person!</span>
+    <h:outputText value="Birthday: #{personPageController.person.birthday}"/>
+
+    <h2 class="whiteOnGreen centered">Courses attended</h2>
+
+    <h:dataTable styleClass="centered data" id="coursesAttended"
+                 value="#{personPageController.person.coursesParticipating}"
+                 var="course" rendered="#{not empty personPageController.person.coursesParticipating}">
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            <h:outputText value="#{course.id}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Name</f:facet>
+            <h:outputText value="#{course.name}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Year</f:facet>
+            <h:outputText value="#{course.year}"/>
+        </h:column>
+    </h:dataTable>
+
+    <h:outputText styleClass="centered" value="No courses attended"
+                  rendered="#{empty personPageController.person.coursesParticipating}"/>
+
+    <h2 class="whiteOnGreen centered">Courses teached</h2>
+
+    <h:dataTable class="centered data" id="coursesTeached" value="#{personPageController.person.coursesTeached}"
+                 var="course" rendered="#{not empty personPageController.person.coursesTeached}">
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            <h:outputText value="#{course.id}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Name</f:facet>
+            <h:outputText value="#{course.name}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Year</f:facet>
+            <h:outputText value="#{course.year}"/>
+        </h:column>
+    </h:dataTable>
+
+    <h:outputText styleClass="centered" value="No courses teached"
+                  rendered="#{ empty personPageController.person.coursesTeached}"/>
+
 </h:body>
 </html>

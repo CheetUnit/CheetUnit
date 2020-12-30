@@ -28,23 +28,23 @@ table{
     text-align: center;
 }
 
-#persons {
+.data {
     width: 50%;
 }
 
-#persons td, #persons th {
+.data td, #data th {
     border: 1px solid var(--grey);
     padding: 8px;
     text-align: left;
 }
 
-#persons a {
+.data a {
     display: block;
 }
 
-#persons tr:hover {background-color: var(--grey);}
+.data tr:hover {background-color: var(--grey);}
 
-#persons th {
+.data th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;

@@ -47,6 +47,10 @@ public class AllPersonsPageController {
         return newPerson;
     }
 
+    public void setNewPerson(Person newPerson) {
+        this.newPerson = newPerson;
+    }
+
     public void saveNewPerson() {
         personService.addPerson(newPerson);
         reloadPersons();

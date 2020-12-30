@@ -27,7 +27,7 @@
 <h:body>
     <h1 class="whiteOnGreen centered">All persons in Hogwarts</h1>
 
-    <h:dataTable class="centered" id="persons" value="#{allPersonsPageController.allPersons}" var="person">
+    <h:dataTable class="centered data" id="persons" value="#{allPersonsPageController.allPersons}" var="person">
         <h:column>
             <f:facet name="header">ID</f:facet>
             <h:link value="#{person.id}" outcome="person">
@@ -61,10 +61,10 @@
 
                 <h:outputLabel for="birthday">Birthday:</h:outputLabel>
                 <h:inputText id="birthday" value="#{allPersonsPageController.newPerson.birthday}" styleClass="datepicker">
-                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    <f:converter converterId="com.gepardec.cheetunit.examples.college.eager.web.LocalDateConverter" />
                 </h:inputText>
             </h:panelGrid>
-            <h:commandButton styleClass="centerText" action="#{allPersonsPageController.saveNewPerson}"
+            <h:commandButton styleClass="centerText" action="#{allPersonsPageController.saveNewPerson()}"
                              value="Add Person">
                 <f:ajax execute="@form" render="@form :persons"/>
             </h:commandButton>
