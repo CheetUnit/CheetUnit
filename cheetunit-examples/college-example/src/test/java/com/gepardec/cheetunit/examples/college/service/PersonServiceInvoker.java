@@ -23,7 +23,7 @@ public class PersonServiceInvoker extends BaseServiceInvoker {
 
     public List<Person> getAllPersons() {
         List<Person> allPersons = service.getAllPersons();
-        return null;
+        return allPersons;
     }
 
     public Person getPersonById(Long id) {
