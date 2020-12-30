@@ -1,3 +1,8 @@
+#
+# Copyright 2020 Gepardec IT Services GmbH and the CheetUnit contributors
+# SPDX-License-Identifier: Apache-2.0
+#
+
 batch
 
 echo Add postgresql driver as module
@@ -10,13 +15,6 @@ echo Add driver
     driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
 
 echo Add CollegeExampleDS datasource
-# TODO #20 use enviroment variables instead of hardcoded values
-# data-source add --jndi-name=${env.JNDI_NAME} \
-#    --name=${env.DS_NAME} \
-#    --connection-url=jdbc:postgresql://${env.DB_HOST}:${env.DB_PORT}/${env.DB_NAME} \
-#    --driver-name=postgresql \
-#    --user-name=${env.DB_USER} \
-#    --password=${env.DB_PASS}
 data-source add --jndi-name=java:jboss/datasources/CollegeExampleDS \
    --name=CollegeExampleDS \
    --connection-url=jdbc:postgresql://postgres:5432/cheetunit \

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#
+# Copyright 2020 Gepardec IT Services GmbH and the CheetUnit contributors
+# SPDX-License-Identifier: Apache-2.0
+#
+
 JBOSS_HOME=/opt/jboss/wildfly
 JBOSS_CLI=$JBOSS_HOME/bin/jboss-cli.sh
 JBOSS_MODE=${1:-"standalone"}

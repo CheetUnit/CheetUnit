@@ -1,3 +1,8 @@
+#
+# Copyright 2020 Gepardec IT Services GmbH and the CheetUnit contributors
+# SPDX-License-Identifier: Apache-2.0
+#
+
 FROM jboss/wildfly:21.0.1.Final
 
 USER root
