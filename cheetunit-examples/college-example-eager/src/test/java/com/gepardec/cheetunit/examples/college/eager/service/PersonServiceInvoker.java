@@ -12,18 +12,17 @@ import com.gepardec.cheetunit.test.BaseServiceInvoker;
 import javax.inject.Inject;
 import java.util.List;
 
+@CheetUnitNoTransactionRequired
 public class PersonServiceInvoker extends BaseServiceInvoker {
 
     @Inject
     private PersonService service;
 
-    @CheetUnitNoTransactionRequired
     public List<Person> getAllPersons() {
         List<Person> allPersons = service.getAllPersons();
         return allPersons;
     }
 
-    @CheetUnitNoTransactionRequired
     public Person getPersonById(Long id) {
        return service.getPersonById(id);
     }

@@ -103,17 +103,17 @@ public class CheetUnitExecutor {
         for (Method method : methods) {
             if (method.getName().equals(executionRequest.getMethodName()) && methodParametersMatching(method, args)) {
                 try {
-                    if (!method.isAnnotationPresent(CheetUnitNoTransactionRequired.class)) {
+                    if (isNoTransactionRequired(method)) {
                         transactionSupport.beginTx();
                     }
                     Object object = method.invoke(primaryObject, args);
                     object = ProxyUnwrapper.unwrap(object, method.getReturnType());
-                    if (!method.isAnnotationPresent(CheetUnitNoTransactionRequired.class)) {
+                    if (isNoTransactionRequired(method)) {
                         transactionSupport.commitTx();
                     }
                     return object;
                 } catch (Exception e) {
-                    if (!method.isAnnotationPresent(CheetUnitNoTransactionRequired.class)) {
+                    if (isNoTransactionRequired(method)) {
                         transactionSupport.rollbackTx();
                     }
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -132,6 +132,10 @@ public class CheetUnitExecutor {
         }
 
         throw new CheetUnitException("Method " + executionRequest.getMethodName() + " is not found in " + primaryObject.getClass().getName());
+    }
+
+    private boolean isNoTransactionRequired(Method method) {
+        return !method.isAnnotationPresent(CheetUnitNoTransactionRequired.class) && !method.getDeclaringClass().isAnnotationPresent(CheetUnitNoTransactionRequired.class);
     }
 
     private Object[] deserializeArguments(ExecutionRequest executionRequest) {
