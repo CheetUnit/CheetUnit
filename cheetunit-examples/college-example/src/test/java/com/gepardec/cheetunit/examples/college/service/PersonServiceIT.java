@@ -10,9 +10,9 @@ import com.gepardec.cheetunit.test.CheetUnit;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class PersonServiceIT {
 

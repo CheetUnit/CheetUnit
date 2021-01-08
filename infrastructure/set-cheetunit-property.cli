@@ -1,0 +1,6 @@
+#
+# Copyright 2020 Gepardec IT Services GmbH and the CheetUnit contributors
+# SPDX-License-Identifier: Apache-2.0
+#
+
+/system-property=cheetunit.enabled:add(value=true)

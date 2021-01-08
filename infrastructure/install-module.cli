@@ -1,0 +1,25 @@
+#
+# Copyright 2020 Gepardec IT Services GmbH and the CheetUnit contributors
+# SPDX-License-Identifier: Apache-2.0
+#
+
+batch
+
+echo Add postgresql driver as module
+module add --name=org.postgresql --resources=/tmp/postgresql-42.2.5.jar --dependencies=javax.api,javax.transaction.api
+
+echo Add driver
+/subsystem=datasources/jdbc-driver=postgresql:add(\
+    driver-name=postgresql, \
+    driver-module-name=org.postgresql, \
+    driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
+echo Add CollegeExampleDS datasource
+data-source add --jndi-name=java:jboss/datasources/CollegeExampleDS \
+   --name=CollegeExampleDS \
+   --connection-url=jdbc:postgresql://postgres:5432/cheetunit \
+   --driver-name=postgresql \
+   --user-name=cheetunit \
+   --password=cheetunit
+
+run-batch
