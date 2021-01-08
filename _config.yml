@@ -1,1 +1,15 @@
-theme: jekyll-theme-minimal
+title: CheetUnit
+lang: en
+description: A Testing Framework for Java EE
+
+remote_theme: rundocs/jekyll-rtd-theme
+
+readme_index:
+  with_frontmatter: true
+
+scss: custom-style.scss
+
+plugins:
+  - jemoji
+  - jekyll-avatar
+  - jekyll-mentions
