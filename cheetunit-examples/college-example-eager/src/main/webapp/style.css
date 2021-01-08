@@ -1,0 +1,54 @@
+/*
+ * Copyright 2020 Gepardec IT Services GmbH and the CheetUnit contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+:root {
+    --green: #10471D;
+    --grey: #ddd;
+}
+
+body{
+    font-family: "Barlow Semi Condensed", Calibri, "Nimbus Sans", sans-serif;
+    font-size: 15pt;
+    background: #f1f1f1;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+.whiteOnGreen {
+    background-color: var(--green);
+    color: white;
+}
+
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.data {
+    width: 50%;
+}
+
+.data td, #data th {
+    border: 1px solid var(--grey);
+    padding: 8px;
+    text-align: left;
+}
+
+.data a {
+    display: block;
+}
+
+.data tr:hover {background-color: var(--grey);}
+
+.data th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--green);
+    color: white;
+}
+

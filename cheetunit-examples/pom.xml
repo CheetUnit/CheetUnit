@@ -25,6 +25,7 @@
         <module>hello-world-example</module>
         <module>greeter-example</module>
         <module>college-example</module>
+        <module>college-example-eager</module>
     </modules>
 
     <dependencies>

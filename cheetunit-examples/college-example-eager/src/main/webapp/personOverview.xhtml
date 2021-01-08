@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Copyright 2020 Gepardec IT Services GmbH and the CheetUnit contributors
+  - SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>All Persons in Hogwarts</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="/resources/demos/style.css"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $(".datepicker").datepicker();
+            $(".datepicker").datepicker( "option", "dateFormat", "dd.mm.yy" );
+        } );
+    </script>
+</h:head>
+<h:body>
+    <h1 class="whiteOnGreen centered">All persons in Hogwarts</h1>
+
+    <h:dataTable class="centered data" id="persons" value="#{allPersonsPageController.allPersons}" var="person">
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            <h:link value="#{person.id}" outcome="person">
+                <f:param name="pid" value="#{person.id}"/>
+            </h:link>
+        </h:column>
+        <h:column>
+            <f:facet name="header">First Name</f:facet>
+            <h:link value="#{person.firstName}" outcome="person">
+                <f:param name="pid" value="#{person.id}"/>
+            </h:link>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Last Name</f:facet>
+            <h:link value="#{person.lastName}" outcome="person">
+                <f:param name="pid" value="#{person.id}"/>
+            </h:link>
+        </h:column>
+    </h:dataTable>
+
+    <h1 class="whiteOnGreen centered">Add a new Person</h1>
+
+    <h:panelGroup layout="block" styleClass="centered">
+        <h:form>
+            <h:panelGrid styleClass="centered" columns="2">
+                <h:outputLabel for="firstName">First name:</h:outputLabel>
+                <h:inputText id="firstName" value="#{allPersonsPageController.newPerson.firstName}"/>
+
+                <h:outputLabel for="lastName">Last name:</h:outputLabel>
+                <h:inputText id="lastName" value="#{allPersonsPageController.newPerson.lastName}"/>
+
+                <h:outputLabel for="birthday">Birthday:</h:outputLabel>
+                <h:inputText id="birthday" value="#{allPersonsPageController.newPerson.birthday}" styleClass="datepicker">
+                    <f:converter converterId="com.gepardec.cheetunit.examples.college.eager.web.LocalDateConverter" />
+                </h:inputText>
+            </h:panelGrid>
+            <h:commandButton styleClass="centerText" action="#{allPersonsPageController.saveNewPerson()}"
+                             value="Add Person">
+                <f:ajax execute="@form" render="@form :persons"/>
+            </h:commandButton>
+        </h:form>
+    </h:panelGroup>
+</h:body>
+</html>
