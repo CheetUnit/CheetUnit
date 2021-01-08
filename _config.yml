@@ -7,7 +7,7 @@ remote_theme: rundocs/jekyll-rtd-theme
 readme_index:
   with_frontmatter: true
 
-scss: custom-style.scss
+scss:
 
 plugins:
   - jemoji
