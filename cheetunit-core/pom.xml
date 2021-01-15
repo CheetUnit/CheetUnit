@@ -59,11 +59,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.gepardec.cheetunit</groupId>
-            <artifactId>cheetunit-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>${javaee.version}</version>

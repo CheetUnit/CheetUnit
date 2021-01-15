@@ -79,9 +79,9 @@
 
     <modules>
         <module>cheetunit-core</module>
+        <module>cheetunit-wildfly</module>
         <module>cheetunit-test</module>
         <module>cheetunit-examples</module>
-        <module>cheetunit-wildfly</module>
     </modules>
 
     <dependencyManagement>
@@ -193,6 +193,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
             </plugin>
         </plugins>
     </build>
