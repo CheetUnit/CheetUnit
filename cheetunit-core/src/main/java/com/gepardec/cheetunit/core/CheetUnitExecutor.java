@@ -103,17 +103,17 @@ public class CheetUnitExecutor {
         for (Method method : methods) {
             if (method.getName().equals(executionRequest.getMethodName()) && methodParametersMatching(method, args)) {
                 try {
-                    if (isNoTransactionRequired(method)) {
+                    if (mustBeExecutedInTransaction(method)) {
                         transactionSupport.beginTx();
                     }
                     Object object = method.invoke(primaryObject, args);
                     object = ProxyUnwrapper.unwrap(object, method.getReturnType());
-                    if (isNoTransactionRequired(method)) {
+                    if (mustBeExecutedInTransaction(method)) {
                         transactionSupport.commitTx();
                     }
                     return object;
                 } catch (Exception e) {
-                    if (isNoTransactionRequired(method)) {
+                    if (mustBeExecutedInTransaction(method)) {
                         transactionSupport.rollbackTx();
                     }
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -134,7 +134,7 @@ public class CheetUnitExecutor {
         throw new CheetUnitException("Method " + executionRequest.getMethodName() + " is not found in " + primaryObject.getClass().getName());
     }
 
-    private boolean isNoTransactionRequired(Method method) {
+    private boolean mustBeExecutedInTransaction(Method method) {
         return !method.isAnnotationPresent(CheetUnitNoTransactionRequired.class) && !method.getDeclaringClass().isAnnotationPresent(CheetUnitNoTransactionRequired.class);
     }
 
