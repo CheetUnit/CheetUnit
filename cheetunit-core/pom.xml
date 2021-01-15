@@ -52,9 +52,10 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/CheetUnit/CheetUnit.git</connection>
-        <developerConnection>scm:git:ssh://github.com:CheetUnit/CheetUnit.git</developerConnection>
-        <url>https://github.com/CheetUnit/CheetUnit/tree/main</url>
+        <connection>scm:git:git@github.com:CheetUnit/CheetUnit.git</connection>
+        <developerConnection>scm:git:git@github.com:CheetUnit/CheetUnit.git</developerConnection>
+        <url>git@github.com:CheetUnit/CheetUnit</url>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
