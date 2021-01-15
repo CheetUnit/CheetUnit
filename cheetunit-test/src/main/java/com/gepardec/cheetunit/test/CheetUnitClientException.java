@@ -10,15 +10,15 @@ package com.gepardec.cheetunit.test;
  */
 public class CheetUnitClientException extends RuntimeException {
 
-    public CheetUnitClientException(String message) {
+    CheetUnitClientException(String message) {
         super(message);
     }
 
-    public CheetUnitClientException(Throwable cause) {
+    CheetUnitClientException(Throwable cause) {
         super(cause);
     }
 
-    public CheetUnitClientException(String message, Throwable cause) {
+    CheetUnitClientException(String message, Throwable cause) {
         super(message, cause);
     }
 }

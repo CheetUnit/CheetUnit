@@ -19,7 +19,7 @@ public class CheetUnitConfig {
     private final String path;
     private final Class<?>[] additionalClasses;
 
-    public static CheetUnitConfig of(String schema, String host, String port, String path, Class<?>... additionalClasses) {
+    static CheetUnitConfig of(String schema, String host, String port, String path, Class<?>... additionalClasses) {
         return new CheetUnitConfig(schema, host, port, path + CHEETUNIT_ENDPOINT, additionalClasses);
     }
 
@@ -31,23 +31,23 @@ public class CheetUnitConfig {
         this.additionalClasses = additionalClasses;
     }
 
-    public String getSchema() {
+    String getSchema() {
         return schema;
     }
 
-    public String getHost() {
+    String getHost() {
         return host;
     }
 
-    public String getPort() {
+    String getPort() {
         return port;
     }
 
-    public String getPath() {
+    String getPath() {
         return path;
     }
 
-    public Class<?>[] getAdditionalClasses() {
+    Class<?>[] getAdditionalClasses() {
         return additionalClasses;
     }
 }

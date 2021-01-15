@@ -8,7 +8,8 @@ package com.gepardec.cheetunit.core;
 import java.util.Base64;
 
 /**
- * Wrapper for serialized object, that  holds the information about original object class and the serialized instance of the object in form of byte array encoded into base64 for lossless transmission over the network.
+ * Wrapper for serialized object, that holds the serialized instance of the object
+ * in form of byte array encoded into base64 for lossless transmission over the network.
  */
 public class SerializedObject {
 
@@ -39,7 +40,7 @@ public class SerializedObject {
      *
      * @return a deserialized instance of the object
      * @throws IllegalStateException if className is null
-     * @throws CheetUnitException    if no class with the className can be found
+     * @throws CheetUnitServerException    if no class with the className can be found
      */
     public Object toObject() {
         return SerializationUtils.deserialize(Base64.getDecoder().decode(serializedInstance));

@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2021 Gepardec IT Services GmbH and the CheetUnit contributors
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- this artefact will be probably released -->
+    <!-- release artifact -->
     <groupId>com.gepardec.cheetunit</groupId>
     <artifactId>cheetunit-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Parent module for the CheetUnit integration test framework</description>
+    <url>https://cheetunit.github.io/CheetUnit/</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Egor Erofeev</name>
+            <email>egor.erofeev@gepardec.com</email>
+            <organization>Gepardec IT Services GmbH</organization>
+            <organizationUrl>https://www.gepardec.com/</organizationUrl>
+        </developer>
+        <developer>
+            <name>Patrick Holzer</name>
+            <email>patrick.holzer@gepardec.com</email>
+            <organization>Gepardec IT Services GmbH</organization>
+            <organizationUrl>https://www.gepardec.com/</organizationUrl>
+        </developer>
+        <developer>
+            <name>Christian Salmhofer</name>
+            <email>christian.salmhofer@gepardec.com</email>
+            <organization>Gepardec IT Services GmbH</organization>
+            <organizationUrl>https://www.gepardec.com/</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/CheetUnit/CheetUnit.git</connection>
+        <developerConnection>scm:git:ssh://github.com:CheetUnit/CheetUnit.git</developerConnection>
+        <url>https://github.com/CheetUnit/CheetUnit/tree/main</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,7 +79,6 @@
 
     <modules>
         <module>cheetunit-core</module>
-        <module>cheetunit-api</module>
         <module>cheetunit-test</module>
         <module>cheetunit-examples</module>
         <module>cheetunit-wildfly</module>
@@ -121,6 +164,32 @@
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>

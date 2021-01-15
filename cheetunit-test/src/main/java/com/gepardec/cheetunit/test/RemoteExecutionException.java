@@ -6,11 +6,11 @@
 package com.gepardec.cheetunit.test;
 
 /**
- * Wr
+ * Wraps unexpected exceptions which may occur on the server side
  */
 public class RemoteExecutionException extends RuntimeException {
 
-    public RemoteExecutionException(String message, Throwable cause) {
+    RemoteExecutionException(String message, Throwable cause) {
         super(message, cause);
     }
 }

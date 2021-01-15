@@ -19,6 +19,9 @@ import java.util.List;
 
 import static com.gepardec.cheetunit.test.CheetUnitProperties.propertyFileName;
 
+/**
+ * Entry point class for CheetUnit integration tests
+ */
 public abstract class CheetUnit {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheetUnit.class);
@@ -34,16 +37,16 @@ public abstract class CheetUnit {
     }
 
     /**
-     * Creates a proxy instance for the given class. <br />
+     * <p>Creates a proxy instance for the given invoker.</p>
      * All methods invocations on the proxy object will be executed on the server side.
      *
      * @param clazz for the proxy instance
      * @param <T>   type of new instance
      * @return proxy instance for the given class
      */
-    public static <T> T createProxy(Class<T> clazz) {
+    public static <T extends BaseServiceInvoker> T createProxy(Class<T> clazz) {
         ProxyFactory factory = new ProxyFactory();
-        factory.setSuperclass(clazz); // TODO Implement if clazz is an interface
+        factory.setSuperclass(clazz);
 
         try {
             return (T) factory.create(new Class<?>[0], new Object[0], new CheetUnitMethodHandler<>(clazz, getConfig(clazz)));
@@ -53,9 +56,9 @@ public abstract class CheetUnit {
         }
     }
 
-    private static <T> CheetUnitConfig getConfig(Class<T> clazz) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    private static <T extends BaseServiceInvoker> CheetUnitConfig getConfig(Class<T> clazz) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         if (CheetUnitConfigProvider.class.isAssignableFrom(clazz)) {
-            Constructor<?>[] constructors = clazz.getDeclaredConstructors(); // TODO handle multiple constructors
+            Constructor<?>[] constructors = clazz.getDeclaredConstructors();
             CheetUnitConfigProvider configProvider = (CheetUnitConfigProvider) constructors[0].newInstance();
             return configProvider.getConfig();
         }

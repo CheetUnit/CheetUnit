@@ -8,11 +8,11 @@ package com.gepardec.cheetunit.core;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CheetUnitClassloader extends ClassLoader {
+class CheetUnitClassloader extends ClassLoader {
 
     private Map<String, byte[]> knownClasses;
 
-    public CheetUnitClassloader(ClassLoader parent, Map<String, byte[]> classes) {
+    CheetUnitClassloader(ClassLoader parent, Map<String, byte[]> classes) {
         super(parent);
         knownClasses = classes;
     }
@@ -20,7 +20,7 @@ public class CheetUnitClassloader extends ClassLoader {
     /**
      * Feed class names with the corresponding bytecodes to the class loader, such that they can be defined from theirs byte codes.
      */
-    public void feedClasses(Map<String, byte[]> classes) {
+    void feedClasses(Map<String, byte[]> classes) {
         if (knownClasses == null) {
             knownClasses = new HashMap<>();
         }
@@ -59,7 +59,7 @@ public class CheetUnitClassloader extends ClassLoader {
         return defineClass(name, bytecode, 0, bytecode.length);
     }
 
-    public static CheetUnitClassloader getNewInstance() {
+    static CheetUnitClassloader getNewInstance() {
         ClassLoader parent = CheetUnitClassloader.class.getClassLoader();
         return new CheetUnitClassloader(parent, new HashMap<>());
     }

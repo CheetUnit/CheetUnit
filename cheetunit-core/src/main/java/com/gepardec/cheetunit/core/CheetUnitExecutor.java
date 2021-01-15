@@ -17,6 +17,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+/**
+ * Entry point class for the server side which starts the requested execution from the client side
+ */
 public class CheetUnitExecutor {
 
     @Inject
@@ -37,7 +40,7 @@ public class CheetUnitExecutor {
     public SerializedObject execute(ExecutionRequest executionRequest) {
 
         try {
-            checkEnabled();
+            verifyCheetUnitIsEnabled();
 
             prepareClassloader(executionRequest);
             Object primaryObject = instantiatePrimaryObject(executionRequest);
@@ -48,10 +51,10 @@ public class CheetUnitExecutor {
         }
     }
 
-    private void checkEnabled() {
+    private void verifyCheetUnitIsEnabled() {
         boolean enabled = Boolean.getBoolean("cheetunit.enabled");
         if (!enabled) {
-            throw new CheetUnitException("CheetUnit is not enabled on server. Please make sure you have the system property cheetunit.enabled set to true");
+            throw new CheetUnitServerException("CheetUnit is not enabled on server. Please make sure you have the system property cheetunit.enabled set to true");
         }
     }
 
@@ -75,7 +78,7 @@ public class CheetUnitExecutor {
         Class<?> mainClass;
         try {
             mainClass = cheetUnitClassloader.loadClass(executionRequest.getPrimaryClassName());
-            primaryObject = mainClass.newInstance();
+            primaryObject = mainClass.getDeclaredConstructor().newInstance();
 
             CreationalContext<?> creationalContext = beanManager.createCreationalContext(null);
             AnnotatedType annotatedType;
@@ -87,7 +90,7 @@ public class CheetUnitExecutor {
                         .inject(primaryObject, creationalContext);
             }
         } catch (Exception e) {
-            throw new CheetUnitException("Instantiation error", e);
+            throw new CheetUnitServerException("Instantiation error", e);
         }
 
         return primaryObject;
@@ -121,17 +124,21 @@ public class CheetUnitExecutor {
                     e.printStackTrace(printStream);
                     String stacktrace = stream.toString();
 
-                    if (e instanceof InvocationTargetException) {
-                        String messageWithStackTrace = e.getCause().getClass().getName() + ": " + e.getCause().getMessage() + System.lineSeparator() + stacktrace;
-                        throw new CheetUnitException(messageWithStackTrace);
-                    } else {
-                        throw new CheetUnitException(stacktrace, e);
-                    }
+                    prepareExceptionAndThrow(e, stacktrace);
                 }
             }
         }
 
-        throw new CheetUnitException("Method " + executionRequest.getMethodName() + " is not found in " + primaryObject.getClass().getName());
+        throw new CheetUnitServerException("Method " + executionRequest.getMethodName() + " is not found in " + primaryObject.getClass().getName());
+    }
+
+    private void prepareExceptionAndThrow(Exception e, String stacktrace) {
+        if (e instanceof InvocationTargetException) {
+            String messageWithStackTrace = e.getCause().getClass().getName() + ": " + e.getCause().getMessage() + System.lineSeparator() + stacktrace;
+            throw new CheetUnitServerException(messageWithStackTrace);
+        } else {
+            throw new CheetUnitServerException(stacktrace, e);
+        }
     }
 
     private boolean mustBeExecutedInTransaction(Method method) {

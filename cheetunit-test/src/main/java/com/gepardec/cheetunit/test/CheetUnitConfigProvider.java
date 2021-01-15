@@ -5,7 +5,7 @@
 
 package com.gepardec.cheetunit.test;
 
-public interface CheetUnitConfigProvider {
+interface CheetUnitConfigProvider {
 
     CheetUnitConfig getConfig();
 }

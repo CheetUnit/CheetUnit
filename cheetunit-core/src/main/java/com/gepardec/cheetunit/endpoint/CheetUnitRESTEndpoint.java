@@ -22,11 +22,11 @@ import javax.ws.rs.core.MediaType;
 public class CheetUnitRESTEndpoint implements CheetUnitEndpoint {
 
     @Inject
-    private CheetUnitExecutor executer;
+    private CheetUnitExecutor executor;
 
     @Override
     @POST
     public SerializedObject execute(ExecutionRequest executionRequest) {
-        return executer.execute(executionRequest);
+        return executor.execute(executionRequest);
     }
 }

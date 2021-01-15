@@ -5,7 +5,7 @@
 
 package com.gepardec.cheetunit.test;
 
-import com.gepardec.cheetunit.core.CheetUnitException;
+import com.gepardec.cheetunit.core.CheetUnitServerException;
 import com.gepardec.cheetunit.core.SerializedObject;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -78,10 +78,10 @@ class RemoteExecutorTest {
     void execute_verifyResponse_CheetUnitExceptionOccurs_ExceptionIsRethrown() {
         String message = "some NPE occured";
         NullPointerException cause = new NullPointerException();
-        CheetUnitException cheetUnitException = new CheetUnitException(message, cause);
-        setupStubWithResponse(cheetUnitException);
+        CheetUnitServerException cheetUnitServerException = new CheetUnitServerException(message, cause);
+        setupStubWithResponse(cheetUnitServerException);
 
-        assertThrows(CheetUnitException.class,
+        assertThrows(CheetUnitServerException.class,
                 () -> remoteExecutor.execute("example method", new Object[]{"arg1", 2L, 3D}),
                 message);
     }

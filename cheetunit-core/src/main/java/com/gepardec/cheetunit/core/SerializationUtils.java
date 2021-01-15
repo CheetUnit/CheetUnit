@@ -27,7 +27,7 @@ public class SerializationUtils {
      * Serializes object into a byte array using xstream serialization. Allows to serialize instances of classes not implementing {@link java.io.Serializable}
      *
      * @param object object to be serialized
-     * @return null, of source object is null. Otherwise serialized object as byte array
+     * @return null, if source object is null. Otherwise serialized object as byte array
      * @see XStream
      */
     public static byte[] serialize(Object object) {

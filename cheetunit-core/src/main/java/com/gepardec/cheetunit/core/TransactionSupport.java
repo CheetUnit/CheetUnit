@@ -3,32 +3,32 @@ package com.gepardec.cheetunit.core;
 import javax.inject.Inject;
 import javax.transaction.UserTransaction;
 
-public class TransactionSupport {
+class TransactionSupport {
 	
 	@Inject
 	private UserTransaction tx;
 
-	public void beginTx() {
+	void beginTx() {
 		try {
 			tx.begin();
 		} catch (Exception e){
-			throw new CheetUnitException("Exception while starting a transaction", e);
+			throw new CheetUnitServerException("Exception while starting a transaction", e);
 		}
 	}
 
-	public void commitTx() {
+	void commitTx() {
 		try {
 			tx.commit();
 		} catch (Exception e){
-			throw new CheetUnitException("Exception while committing a transaction", e);
+			throw new CheetUnitServerException("Exception while committing a transaction", e);
 		}
 	}
 
-	public void rollbackTx() {
+	void rollbackTx() {
 		try {
 			tx.rollback();
 		} catch (Exception e){
-			throw new CheetUnitException("Exception while performing transaction rollback", e);
+			throw new CheetUnitServerException("Exception while performing transaction rollback", e);
 		}
 	}
 

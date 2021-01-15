@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import static org.apache.commons.lang3.StringUtils.rightPad;
+
 /**
- * Resolves the given property fileName in the classpath and adds all properties to the system properties. <br />
+ * <p>Resolves the given property fileName in the classpath and adds all properties to the system properties.</p>
  * If a property is already set (e.g. passed as a cli parameter) the files property will be ignored.
  */
 class CheetUnitPropertyResolver {
@@ -22,7 +24,7 @@ class CheetUnitPropertyResolver {
 
     private final String fileName;
 
-    public CheetUnitPropertyResolver(String fileName) {
+    CheetUnitPropertyResolver(String fileName) {
         this.fileName = fileName;
     }
 
@@ -53,7 +55,7 @@ class CheetUnitPropertyResolver {
         LOG.info("*** Effective cheetunit properties ***");
         System.getProperties().entrySet().stream()
                 .filter(entry -> entry.getKey().toString().startsWith("cheetunit"))
-                .forEach(entry -> LOG.info("{} : {}", entry.getKey(), entry.getValue()));
+                .forEach(entry -> LOG.info("{} : {}", rightPad(entry.getKey().toString(), 40), entry.getValue()));
     }
 
     private void setSystemProperties(Properties prop) {

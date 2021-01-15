@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * DTO which will be sent from the clientside to the serverside.
+ * DTO which will be sent from the client side to the server side.
  */
 public class ExecutionRequest {
 

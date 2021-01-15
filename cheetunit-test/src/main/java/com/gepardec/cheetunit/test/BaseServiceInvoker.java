@@ -18,7 +18,7 @@ public abstract class BaseServiceInvoker implements CheetUnitConfigProvider {
     }
 
     /**
-     * Override this method to add additional classes which are always required for your application integration tests. <br />
+     * <p>Override this method to add additional classes which are always required for your application integration tests.</p>
      * The following classes must be contained in the the returned array:
      * <ul>
      *     <li>{@link BaseServiceInvoker}</li>

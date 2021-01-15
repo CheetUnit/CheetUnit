@@ -8,6 +8,9 @@ package com.gepardec.cheetunit.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Holds all relevant properties for cheetunit
+ */
 class CheetUnitProperties {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheetUnitProperties.class);

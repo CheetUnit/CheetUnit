@@ -6,7 +6,7 @@
 package com.gepardec.cheetunit.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gepardec.cheetunit.core.CheetUnitException;
+import com.gepardec.cheetunit.core.CheetUnitServerException;
 import com.gepardec.cheetunit.core.ExecutionRequest;
 import com.gepardec.cheetunit.core.SerializedObject;
 import okhttp3.*;
@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Remote executor for transferring all necessary artifacts to the server and executing the class under test from client side (e.g. unit test) on the server side.
+ * Remote executor for transferring all necessary objects to the server
+ * and executing the invoker method from client side (e.g. unit test) on the server side.
  */
 class RemoteExecutor {
 
@@ -45,7 +46,7 @@ class RemoteExecutor {
     }
 
     /**
-     * Transfers all necessary information to the server side by executing a REST request. <br />
+     * <p>Transfers all necessary information to the server side by executing a REST request.</p>
      * Uses Serialization and Base64 decoding/encoding for transferring binary data.
      *
      * @param methodName which should be executed
@@ -53,9 +54,9 @@ class RemoteExecutor {
      * @return result of the method under test, which has been executed on the server side
      */
     Object execute(String methodName, Object[] args) {
-        ExecutionRequest dto = ExecutionRequestFactory.create(methodName, args, classes);
+        ExecutionRequest request = ExecutionRequestFactory.create(methodName, args, classes);
 
-        SerializedObject response = executeRestCall(dto);
+        SerializedObject response = executeRestCall(request);
 
         return unwrapResponse(response);
     }
@@ -63,9 +64,9 @@ class RemoteExecutor {
     private Object unwrapResponse(SerializedObject response) {
         Object returnObject = response.toObject();
 
-        if (returnObject instanceof CheetUnitException) {
+        if (returnObject instanceof CheetUnitServerException) {
             LOG.error("Something unexpected has happened on the server side.", (Exception) returnObject);
-            throw ((CheetUnitException) returnObject);
+            throw ((CheetUnitServerException) returnObject);
         }
         if (returnObject instanceof Throwable) {
             LOG.warn("An exception has been thrown on the server side.", ((Throwable) returnObject));
@@ -90,6 +91,7 @@ class RemoteExecutor {
                 throw new CheetUnitClientException("Response doesn't contain any appropriate payload.");
             }
 
+            //noinspection ConstantConditions
             return objectMapper.readValue(response.body().string(), SerializedObject.class);
         } catch (Exception e) {
             throw new CheetUnitClientException(e);

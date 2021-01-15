@@ -26,12 +26,12 @@ class ExecutionRequestFactory {
     }
 
     static ExecutionRequest create(String methodName, Object[] args, List<Class<?>> classes) {
-        ExecutionRequest dto = new ExecutionRequest();
-        dto.setPrimaryClassName(classes.get(0).getName());
-        dto.setMethodName(methodName);
-        dto.setArgs(Arrays.stream(args).map(SerializedObject::of).collect(Collectors.toList()));
-        dto.setClassMap(createClassMap(classes));
-        return dto;
+        ExecutionRequest request = new ExecutionRequest();
+        request.setPrimaryClassName(classes.get(0).getName());
+        request.setMethodName(methodName);
+        request.setArgs(Arrays.stream(args).map(SerializedObject::of).collect(Collectors.toList()));
+        request.setClassMap(createClassMap(classes));
+        return request;
     }
 
 
@@ -41,7 +41,6 @@ class ExecutionRequestFactory {
                         Class::getName,
                         ExecutionRequestFactory::toByteArrayBase64Encoded
                 ));
-        // TODO implement for inner classes
     }
 
     private static String toByteArrayBase64Encoded(Class<?> clazz) {
