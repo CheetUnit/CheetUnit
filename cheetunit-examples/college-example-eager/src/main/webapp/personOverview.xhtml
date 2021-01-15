@@ -61,7 +61,7 @@
 
                 <h:outputLabel for="birthday">Birthday:</h:outputLabel>
                 <h:inputText id="birthday" value="#{allPersonsPageController.newPerson.birthday}" styleClass="datepicker">
-                    <f:converter converterId="com.gepardec.cheetunit.examples.college.eager.web.LocalDateConverter" />
+                    <f:converter converterId="io.github.cheetunit.examples.college.eager.web.LocalDateConverter" />
                 </h:inputText>
             </h:panelGrid>
             <h:commandButton styleClass="centerText" action="#{allPersonsPageController.saveNewPerson()}"
