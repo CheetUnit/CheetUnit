@@ -10,7 +10,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>cheetunit-parent</artifactId>
-        <groupId>com.gepardec.cheetunit</groupId>
+        <groupId>io.github.cheetunit</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -59,7 +59,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.gepardec.cheetunit</groupId>
+            <groupId>io.github.cheetunit</groupId>
             <artifactId>cheetunit-core</artifactId>
             <version>${project.version}</version>
         </dependency>
