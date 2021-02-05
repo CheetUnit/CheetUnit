@@ -34,10 +34,8 @@ jobs:
           ${{ runner.os }}-maven-
     - name: Build with Maven
       run: mvn -B clean install -DskipITs=true -DskipUnitTests=false
-    - uses: whoan/docker-build-with-cache-action@v5
-      with:
-        image_name: cheetunit-jboss
-        push_image_and_stages: false
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      continue-on-error: true
     - name: Pre Integration Test
       run: |
         echo "=> Create network"
@@ -53,6 +51,7 @@ jobs:
         mvn flyway:migrate
         cd ../..
         echo "=> Start JBoss"
+        docker build -t cheetunit-jboss .
         docker run -d -p 8080:8080 --net=cheetunit --name cheetunit-jboss cheetunit-jboss
     - name: Integration Test
       run: mvn verify -DskipITs=false -DskipUnitTests=true
