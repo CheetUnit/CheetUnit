@@ -3,7 +3,7 @@ sort: 2
 ---
 
 
-# CheetUnit under the Hood
+# CheetUnit under the hood
 
 ```note
 Information will follow soon!
@@ -11,12 +11,12 @@ Information will follow soon!
 
 ## How it works
 
-## Architectural Overview
+## Architectural overview
 
 ## Modules
 
-### CheetUnit Core
+### CheetUnit-Core
 
-### CheetUnit Test
+### CheetUnit-Test
 
-### CheetUnit Wildfly
+### CheetUnit-Wildfly

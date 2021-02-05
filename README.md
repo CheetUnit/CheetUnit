@@ -22,7 +22,7 @@ It is easy to start using CheetUnit, just follow our [quick intro](https://cheet
 ### Tested servers
 
 * JBoss EAP 7.2.0 (Red Hat JBoss Enterprise Application Platform - Version 7.2.0.GA)
-* Wilfly 20.0.1.Final
+* Wildfly 20.0.1.Final
 
 ### Supported Java versions
 
