@@ -23,7 +23,7 @@ This project is inspired by [WarpUnit](https://github.com/dcm4che/WarpUnit).
 
 ## <a name="quickstart" />Quick start
 
-It is easy to start using CheetUnit, just follow our [starting guide](https://cheetunit.github.io/CheetUnit).
+It is easy to start using CheetUnit, just follow our [quick intro](https://cheetunit.github.io/CheetUnit/getting_started.html#quick-intro).
 
 ## <a name="news" />Latest news
 
