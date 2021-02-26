@@ -1,5 +1,7 @@
 ---
 sort: 1
+title: Getting started
+summary: "First steps to start to use the CheetUnit."
 ---
 
 # Getting started

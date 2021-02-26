@@ -1,3 +1,7 @@
+---
+title: Home
+summary: "Welcome to the documentation site of CheetUnit."
+---
 # CheetUnit
 
 [![License](https://img.shields.io/github/license/CheetUnit/CheetUnit)](https://www.apache.org/licenses/LICENSE-2.0.txt)
