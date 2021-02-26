@@ -8,7 +8,7 @@
 * [About CheetUnit](#about)
 * [Quick start](#quickstart)
 * [Latest News](#news)
-* CheetUnit web site contains the [**CheetUnit Core documentation**](https://cheetunit.github.io/CheetUnit).
+* CheetUnit web site contains the [**CheetUnit documentation**](https://cheetunit.github.io/CheetUnit).
 * [Contributing](#contributing)
 
 ## <a name="about" />About CheetUnit
