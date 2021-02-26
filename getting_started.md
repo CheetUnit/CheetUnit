@@ -15,7 +15,6 @@ Add the application server specific CheetUnit dependency to your pom. Currently,
 dependency publishes the CheetUnit insider http endpoint.
 
 ```xml
-
 <dependency>
     <groupId>io.github.cheetunit</groupId>
     <artifactId>cheetunit-wildfly</artifactId>
@@ -27,7 +26,6 @@ Add the test specific CheetUnit dependency to your pom. This dependency provides
 class and the relating invoker class to the server side where it will be executed.
 
 ```xml
-
 <dependency>
     <groupId>io.github.cheetunit</groupId>
     <artifactId>cheetunit-test</artifactId>
@@ -46,7 +44,6 @@ _Example for Wildfly / JBoss EAP_
 Set the system property in the standalone.xml:
 
 ```xml
-
 <system-properties>
     <property name="cheetunit.enabled" value="true"/>
 </system-properties>
