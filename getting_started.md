@@ -38,7 +38,12 @@ class and the relating invoker class to the server side where it will be execute
 
 **Enable CheetUnit on the server side**
 
-Set the `cheetunit.enabled` system property on the server side in the standalone.xml.
+Set the system property `cheetunit.enabled=true` on the server side. For example you can start your server with `-Dcheetunit.enabled=true`
+
+
+_Example for Wildfly / JBoss EAP_
+
+Set the system property in the standalone.xml:
 
 ```xml
 
@@ -47,7 +52,7 @@ Set the `cheetunit.enabled` system property on the server side in the standalone
 </system-properties>
 ```
 
-Alternatively you can use the CLI to set the system property:
+Set the system property via jboss-cli:
 
 ```shell
 /system-property=cheetunit.enabled:add(value=true)
