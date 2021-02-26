@@ -15,6 +15,8 @@ More information will follow soon!
 
 ## Architectural overview
 
+![Server Side Application Overview](https://github.com/CheetUnit/CheetUnit/raw/gh-pages/_images/CheetUnit_Application_Overview.jpg | width=400)
+
 ## Modules
 
 ### CheetUnit-Core
