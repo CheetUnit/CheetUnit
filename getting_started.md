@@ -12,7 +12,7 @@ CheetUnit artifacts are in the Maven central repository. In order to use CheetUn
 your project.
 
 Add the application server specific CheetUnit dependency to your pom. Currently, only wildfly is supported. This
-dependency publishes the cheetunit insider http endpoint.
+dependency publishes the CheetUnit insider http endpoint.
 
 ```xml
 
@@ -127,7 +127,7 @@ different configuration, e.g. continuous integration environments. If you want t
 not the default name, you can pass the system property `cheetunit.property.file` with the regarding property file name to
 your process call. In addition, it is possible to override existing property definitions through the CLI. 
 
-All mandatory properties describe the path to the cheetunit insider endpoint so that the client side of CheetUnit (Unit
+All mandatory properties describe the path to the CheetUnit insider endpoint so that the client side of CheetUnit (Unit
 tests) knows where to transfer the invoker class.
 
 * `cheetunit.host.protocol`=http
@@ -214,17 +214,17 @@ object. Check out our example tests
 [GreeterServiceIT](https://github.com/CheetUnit/CheetUnit/blob/main/cheetunit-examples/greeter-example/src/test/java/io/github/cheetunit/examples/greeter/GreeterServiceIT.java). 
 
 ```warning
-Currently there is a restriction: you can't use lambdas, other functional objects or instances of anonymous inner classes as parameters for cheetunit calls.
+Currently there is a restriction: you can't use lambdas, other functional objects or instances of anonymous inner classes as parameters for CheetUnit calls.
 We plan to support this in future versions.
 ```
 ### Transactions
 
-By default, each cheetunit call is executed in a separate transaction. This is required in some situations.
+By default, each CheetUnit call is executed in a separate transaction. This is required in some situations.
 
 For example: your method call returns a JPA entity having fields that are lazy loaded. While the serialization of the entity, all fields are being loaded. This action requires an active transaction.
 
 If your transactions are managed by a container, you do not need to do anything.
-However, if you manage transactions by yourself (e.g. via `tx.begin();`, `tx.commit();`), you need to execute cheetunit calls without transaction. This can be done via the annotating of the corresponding invoker or an invoker method:
+However, if you manage transactions by yourself (e.g. via `tx.begin();`, `tx.commit();`), you need to execute CheetUnit calls without transaction. This can be done via the annotating of the corresponding invoker or an invoker method:
 
 ```java
 @CheetUnitNoTransactionRequired
