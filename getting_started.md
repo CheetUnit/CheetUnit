@@ -8,7 +8,7 @@ sort: 1
 
 **Add Maven dependencies**
 
-CheetUnit artifacts are in the Maven central repository. In order to use CheetUnit you must include two dependencies to
+CheetUnit artifacts are in the Maven central repository. In order to use CheetUnit you have to include two dependencies to
 your project.
 
 Add the application server specific CheetUnit dependency to your pom. Currently, only wildfly is supported. This
@@ -18,7 +18,7 @@ dependency publishes the CheetUnit insider http endpoint.
 <dependency>
     <groupId>io.github.cheetunit</groupId>
     <artifactId>cheetunit-wildfly</artifactId>
-    <version>1.0.0-RC1</version>
+    <version>${cheetunit-version}</version>
 </dependency>
 ```
 
@@ -29,7 +29,7 @@ class and the relating invoker class to the server side where it will be execute
 <dependency>
     <groupId>io.github.cheetunit</groupId>
     <artifactId>cheetunit-test</artifactId>
-    <version>1.0.0-RC1</version>
+    <version>${cheetunit-version}</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -207,11 +207,10 @@ class HelloWorldServiceIT {
 ### Method Call with parameters
 
 In addition, we provided some examples where we pass different kind of parameters (primitives, enum, pojos) and expect a return 
-object. Check out our example tests  
-[GreeterServiceIT](https://github.com/CheetUnit/CheetUnit/blob/main/cheetunit-examples/greeter-example/src/test/java/io/github/cheetunit/examples/greeter/GreeterServiceIT.java). 
+object. Check out our example test [GreeterServiceIT](https://github.com/CheetUnit/CheetUnit/blob/main/cheetunit-examples/greeter-example/src/test/java/io/github/cheetunit/examples/greeter/GreeterServiceIT.java). 
 
 ```warning
-Currently there is a restriction: you can't use lambdas, other functional objects or instances of anonymous inner classes as parameters for CheetUnit calls.
+Currently there is a restriction: you can't use lambdas, other functional objects or instances of anonymous inner classes as parameters for CheetUnit calls. 
 We plan to support this in future versions.
 ```
 ### Transactions
