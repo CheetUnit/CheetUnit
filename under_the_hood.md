@@ -6,10 +6,12 @@ sort: 2
 # CheetUnit under the hood
 
 ```note
-Information will follow soon!
+More information will follow soon!
 ```
 
 ## How it works
+
+![CheetUnit-Flow-Diagram](https://github.com/CheetUnit/CheetUnit/raw/gh-pages/_images/CheetUnit_Flow.jpg)
 
 ## Architectural overview
 
