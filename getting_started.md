@@ -116,6 +116,12 @@ class HelloWorldServiceIT {
 1. Deploy your application with the CheetUnit insider endpoint.
 2. Run your test
 
+```note
+Implement your service class before you write the corresponding invoker class. If you prefer test-driven development, 
+you can start implementing your service class with the signature of your method under the test. Keep in mind that 
+you need to redeploy (or hot swap) after every change.
+```
+
 ## Configuration
 
 The simplest way to configure CheetUnit is through a property file. The default path for the property file
